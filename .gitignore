@@ -1,0 +1,27 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet packages (restored on build via packages.config)
+packages/
+*.nupkg
+
+# Secrets — see Web.config.example / SmtpConfig.example.cs for the shape
+Web.config
+Web.Debug.config
+Web.Release.config
+SmtpConfig.cs
+
+# Third-party admin theme assets
+assets/

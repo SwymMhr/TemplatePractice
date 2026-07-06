@@ -1,0 +1,440 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="TemplatePractice.Main" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <title> Avighna Technologies </title>
+
+    <!-- Pickers -->
+    <link href="assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" />
+    <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="assets/plugins/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet" />
+    <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <link href="assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.css" rel="stylesheet" />
+
+    <!-- Jquery filer css -->
+    <link href="assets/plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
+    <link href="assets/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+
+
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/plugins/switchery/switchery.min.css" />
+    <script src="assets/js/jquery-3.4.1.js"></script>
+
+    <script src="assets/js/modernizr.min.js"></script>
+
+    <!-- Sweet Alert-->
+    <script src="assets/sweetalert.js"></script>
+</head>
+<body class="fixed-left">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+        <!-- Loader -->
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                  <div class="spinner-wrapper">
+                    <div class="rotator">
+                      <div class="inner-spin"></div>
+                      <div class="inner-spin"></div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Top Bar Start -->
+            <div class="topbar">
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <a href="index.html" class="logo"><span>Avighna</span><i class="mdi mdi-cube"></i></a>
+                </div>
+
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="container">
+
+                        <!-- Navbar-left -->
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <button type="button" class="button-menu-mobile open-left waves-effect waves-light">
+                                    <i class="mdi mdi-menu"></i>
+                                </button>
+                            </li>
+                            <li class="hidden-xs">
+                                <a href="#" class="menu-item waves-effect waves-light" id="time"></a>
+                            </li>
+                            <script>
+                                var today = new Date();
+                                var dd = today.getDate();
+                                var mm = today.getMonth() + 1; //January is 0!
+                                var yyyy = today.getFullYear();
+                                if (dd < 10) {
+
+                                    dd = '0' + dd
+                                }
+                                if (mm < 10) {
+
+                                    mm = '0' + mm
+                                }
+                                today = mm + '/' + dd + '/' + yyyy;
+                                var myVar = setInterval(function () { myTimer() }, 1000);
+                                function myTimer() {
+                                    var d = new Date();
+                                    document.getElementById("time").innerHTML = d.toLocaleTimeString();
+                                }
+                            </script>
+                        </ul>
+
+                        <!-- Right(Notification) -->
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                            <li class="dropdown user-box">
+                                <a href="#" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
+                                    <img runat="server" src="~/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
+                                    <li>
+                                        <h5>Hi, <asp:Label ID="lblLoginUsername" runat="server" Text=""></asp:Label></h5>
+                                    </li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="#"><i class="mdi mdi-account-settings-variant m-r-5"></i>Change Password </asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/other-pages/page-logout.aspx"><i class="ti-power-off m-r-5"></i> Logout</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                        </ul> <!-- end navbar-right -->
+
+                    </div><!-- end container -->
+                </div><!-- end navbar -->
+            </div>
+            <!-- Top Bar End -->
+
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <!-- User detail -->
+                        <div class="user-details">
+                            <div class="overlay"></div>
+                            <div class="text-center">
+                                <asp:Image runat="server" ImageUrl="~/assets/images/users/avatar-1.jpg" alt="" class="thumb-md img-circle"></asp:Image>
+                            </div>
+                            <div class="user-info">
+                                <div>
+                                    <a href="#setting-dropdown" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> User Name <span class="mdi mdi-menu-down"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end user detail -->
+
+                        <div class="dropdown" id="setting-dropdown">
+                            <ul class="dropdown-menu">
+                                <li><asp:HyperLink runat="server" NavigateUrl="#"><i class="mdi mdi-account-settings-variant m-r-5"></i>Change Password</asp:HyperLink></li>
+                                <li><asp:HyperLink runat="server" NavigateUrl="~/pages/other-pages/page-logout.aspx"><i class="mdi mdi-logout m-r-5"></i>Logout</asp:HyperLink></li>
+                            </ul>
+                        </div>
+
+                        <ul>                        	
+                            <li>
+                                <a href="<%= ResolveUrl("~/pages/dashboard/dashboard.aspx") %>" class="waves-effect">
+                                    <i class="mdi mdi-view-dashboard"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-worker"></i>
+                                    Customer Support
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/customer-support/customerSupport.aspx">Customer Support</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="#">Customer Care</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-settings"></i>
+                                    System Setup
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/company.aspx">Company</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/branchList.aspx">Branch</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/departmentList.aspx">Department</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/gradeList.aspx">Grade</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/designationList.aspx">Designation</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/leaveList.aspx">Leave</asp:HyperLink></li>
+
+                                    <li class="has_sub">
+                                        <a href="#">
+                                            Public Holiday
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><asp:HyperLink runat="server" NavigateUrl="holidayList">Setup</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="HolidayAssign">Assign</asp:HyperLink></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has_sub">
+                                        <a href="#">
+                                            Roster
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/roster/workHourList.aspx">Working Hour</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/roster/rosterAssign.aspx">Assign</asp:HyperLink></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><asp:HyperLink runat="server" NavigateUrl="fiscalyearsetup">Fiscal Year Setup</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="salarysheetlist">Salary Sheet</asp:HyperLink></li>
+                                </ul>
+                            </li>
+                            
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-account-key"></i>
+                                    HR Management
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/hr-management/employeeList.aspx">Employee</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/hr-management/inactiveList.aspx">Inactive List</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-clock"></i>
+                                    Attendance Mgmt
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/attendance-management/forceAttendance.aspx">Force Attendance</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/attendance-management/forceAttendanceBatch.aspx">Force Attendance Batch</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-airplane"></i>
+                                    Leave Mgmt
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="leaveApproval">Leave Approval</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="leaveApplication">Leave Application</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="leaveAssignment">Leave Assignment</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="leaveCancellation">Leave Cancellation</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <ul class="list-unstyled"></ul>
+                            </li>
+
+                            <li>
+                                <a href="outstationList" class="waves-effect">
+                                    <i class="mdi mdi-calendar"></i>
+                                    <span>Outstation</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="overTimeManagement" class="waves-effect">
+                                    <i class="mdi mdi-timer"></i>
+                                    <span>Over Time Mgmt</span>
+                                </a>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-airplane"></i>
+                                    Events
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="eventList">List</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="eventAssign">Assign</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-format-list-bulleted"></i>
+                                    Report
+                                    <span class="menu-arrow"></span>
+                                </a>
+
+                                <ul class="list-unstyled">
+                                    <li class="has_sub">
+                                        <a href="#">
+                                            Attendance Report
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><asp:HyperLink runat="server" NavigateUrl="quickAttendance">Quick Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="monthlyAttendance">Monthly Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="datewiseAttendance">Datewise Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="dailyAttendance">Daily Attendance</asp:HyperLink></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has_sub">
+                                        <a href="#">
+                                            Leave Report
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><asp:HyperLink runat="server" NavigateUrl="leaveInformation">Leave Information</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="leaveTakenDetail">Leave Taken Detail</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="leaveDetail">Leave Detail</asp:HyperLink></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has_sub">
+                                        <a href="#">
+                                            Employee Info
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <ul class="list-unstyled">
+                                            <li><asp:HyperLink runat="server" NavigateUrl="employeeReport">Employee Report</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="employeeDetailInfo">Employee Detail Info</asp:HyperLink></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="has_sub">
+                                        <ul class="list-unstyled"></ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="permission" class="waves-effect">
+                                    <i class="mdi mdi-gavel"></i>
+                                    <span>Permission</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="logHistory" class="waves-effect">
+                                    <i class="mdi mdi-history"></i>
+                                    <span>Log History</span>
+                                </a>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="#" class="wave-effect">
+                                    <i class="mdi mdi-delete-forever"></i>
+                                    Delete
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="list-unstyled">
+                                    <li><asp:HyperLink runat="server" NavigateUrl="deleteattendance">Attendance</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="deleteOutstation">Outstation</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="deleteEmployee">Employee</asp:HyperLink></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- Sidebar -->
+                    <div class="clearfix"></div>
+
+                    <div class="help-box">
+                        <h5 class="text-muted m-t-0">For Help ?</h5>
+                        <p class="">
+                            <span class="text-dark"><i class="mdi mdi-gmail"></i><b>Email :</b></span>
+                            <br />
+                            <span id="lblEmail1">info.avighnatech@gmail.com</span>
+                            <br />
+                            <span id="lblEmail2">helpdesk.avighnatech@gmail.com</span>
+                        </p>
+                        <p class="m-b-0">
+                            <span class="text-dark"><i class="mdi mdi-phone-classic"></i><b>Call :</b></span>
+                            <br />
+                            <span id="lblConatct1">(+977) 01-5905806</span>
+                            <br />
+                            <span id="lblConatct2">(+977) 01-5905807</span>
+                        </p>
+                    </div>
+
+                </div>
+                <!-- Sidebar -left -->
+
+            </div>
+            <!-- Left Sidebar End -->
+            
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+                       
+
+                <footer class="footer text-right">
+                    <span id="lblDate">2026</span>
+                    @
+                    <a id="HyperLink" href="http://" target="_blank">Avighna Tech</a>
+                    ©
+                    <a id="HyperLinkAdmin" href="http://www.avighnatechnology.com" target="_blank">Avighna Technologies Pvt. Ltd</a>
+              
+                </footer>
+            </div>                     
+
+        </div>
+        <!-- END wrapper -->
+
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="<%= ResolveUrl("~/assets/js/jquery.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/bootstrap.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/detect.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/fastclick.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/jquery.blockUI.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/waves.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/jquery.slimscroll.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/jquery.scrollTo.min.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/jquery.core.js") %>"></script>
+        <script src="<%= ResolveUrl("~/assets/js/jquery.app.js") %>"></script>
+
+        <asp:ContentPlaceHolder ID="cphScripts" runat="server"></asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>
