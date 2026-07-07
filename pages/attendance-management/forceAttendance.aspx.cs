@@ -12,6 +12,7 @@ namespace TemplatingPractice.pages.attendance_management
     {
         BLLEmployee ble = new BLLEmployee();
         BLLAttendance bla = new BLLAttendance();
+        BLLEmployeeShift bles = new BLLEmployeeShift();
 
         private const string SessionKey = "PendingAttendanceRows";
 
@@ -116,7 +117,6 @@ namespace TemplatingPractice.pages.attendance_management
                 DateTime adDate = DateTime.ParseExact(entry["ad"], "yyyy-MM-dd", null);
                 string bsDate = entry["bs"];
 
-                // Skip duplicates already queued in this session
                 bool alreadyQueued = false;
                 foreach (DataRow r in dt.Rows)
                 {
@@ -180,7 +180,14 @@ namespace TemplatingPractice.pages.attendance_management
                     continue;
                 }
 
-                bla.CreateAttendance(employeeId, dateEnglish, dateNepali, attendanceType);
+                // Look up the employee's shift for this specific weekday
+                // (e.g. "Monday") from tblEmployeeShift. If none is assigned,
+                // shiftId stays null and the attendance record is still saved.
+                string weekDay = dateEnglish.DayOfWeek.ToString();
+                DataRow shiftRow = bles.GetShiftForEmployeeAndWeekday(employeeId, weekDay);
+                int? shiftId = shiftRow != null ? Convert.ToInt32(shiftRow["WorkHourID"]) : (int?)null;
+
+                bla.CreateAttendance(employeeId, dateEnglish, dateNepali, attendanceType, shiftId);
                 savedCount++;
             }
 

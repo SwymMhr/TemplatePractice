@@ -19,6 +19,12 @@ namespace TemplatingPractice.BLL
             return (dt != null && dt.Rows.Count > 0) ? dt.Rows[0] : null;
         }
 
+        public DataTable GetActiveWorkHour()
+        {
+            SqlParameter[] param = { new SqlParameter("@Status", "Active") };
+            return DAO.GetTableQuery("SELECT * FROM tblWorkHour WHERE Status = @Status ORDER BY ShiftName ASC", param);
+        }
+
         public int CreateWorkHour(string shiftName, string startTime, string lateInBy, string totalHour,
             int lunchTime, string endTime, string lateOutBy, string shift, bool defaultForAllWeekend, string status)
         {

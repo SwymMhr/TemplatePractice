@@ -1103,6 +1103,7 @@
     <Compile Include="BLL\BLLAttendance.cs" />
     <Compile Include="BLL\BLLDepartment.cs" />
     <Compile Include="BLL\BLLDesignation.cs" />
+    <Compile Include="BLL\BLLEmployeeShift.cs" />
     <Compile Include="BLL\BLLGrade.cs" />
     <Compile Include="BLL\BLLLeave.cs" />
     <Compile Include="BLL\BLLUser.cs" />

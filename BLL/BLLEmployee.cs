@@ -83,6 +83,19 @@ namespace TemplatingPractice.BLL
             return DAO.GetTableQuery("SELECT * FROM tblEmployee WHERE Status = @Status", param);
         }
 
+        public DataTable GetEmployeeByBranchAndDepartment(int branchId, int departmentId)
+        {
+            SqlParameter[] param =
+            {
+                new SqlParameter("@BranchID", branchId),
+                new SqlParameter("@DepartmentID", departmentId)
+            };
+            return DAO.GetTableQuery(@" SELECT EmployeeID, EmployeeName 
+                                        FROM tblEmployee 
+                                        WHERE BranchID = @BranchID AND DepartmentID = @DepartmentID
+                                        ORDER BY EmployeeName ASC", param);
+        }
+
         public bool IsEmployeeCodeExists(string employeeCode)
         {
             SqlParameter[] param =
