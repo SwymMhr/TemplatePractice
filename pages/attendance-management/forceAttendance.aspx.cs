@@ -5,6 +5,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TemplatingPractice.BLL;
+using TemplatingPractice.Utils;
 
 namespace TemplatingPractice.pages.attendance_management
 {
@@ -14,55 +15,14 @@ namespace TemplatingPractice.pages.attendance_management
         BLLAttendance bla = new BLLAttendance();
         BLLEmployeeShift bles = new BLLEmployeeShift();
 
-        private const string SessionKey = "PendingAttendanceRows";
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                Session[SessionKey] = CreatePendingTable();
-                BindGrid();
-            }
-        }
 
-        private DataTable CreatePendingTable()
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("EmployeeID", typeof(int));
-            dt.Columns.Add("EmployeeName", typeof(string));
-            dt.Columns.Add("AttendanceDateEnglish", typeof(DateTime));
-            dt.Columns.Add("AttendanceDateNepali", typeof(string));
-            dt.Columns.Add("AttendanceType", typeof(string));
-            return dt;
-        }
-
-        private DataTable PendingTable
-        {
-            get
-            {
-                if (Session[SessionKey] == null)
-                    Session[SessionKey] = CreatePendingTable();
-                return (DataTable)Session[SessionKey];
-            }
-        }
-
-        private void BindGrid()
-        {
-            DataTable dt = PendingTable;
-            gvAttendance.DataSource = dt;
-            gvAttendance.DataBind();
-
-            pnlAttendanceList.Visible = dt.Rows.Count > 0;
         }
 
         protected void txtId_TextChanged(object sender, EventArgs e)
         {
-            int employeeId;
-            if (!int.TryParse(txtId.Text.Trim(), out employeeId))
-            {
-                ClearEmployeeFields();
-                return;
-            }
+            int employeeId = Convert.ToInt32(txtId.Text);
 
             DataTable dt = ble.GetEmployeeLookupById(employeeId);
             if (dt.Rows.Count == 0)
@@ -72,12 +32,11 @@ namespace TemplatingPractice.pages.attendance_management
                 return;
             }
 
-            DataRow row = dt.Rows[0];
-            txtEmp.Text = row["EmployeeName"].ToString();
-            txtDesignation.Text = row["DesignationName"].ToString();
-            txtDept.Text = row["DepartmentName"].ToString();
-            txtBranch.Text = row["BranchName"].ToString();
-            hfEmployeeId.Value = employeeId.ToString();
+            txtEmp.Text = dt.Rows[0]["EmployeeName"].ToString();
+            txtDesignation.Text = dt.Rows[0]["DesignationName"].ToString();
+            txtDept.Text = dt.Rows[0]["DepartmentName"].ToString();
+            txtBranch.Text = dt.Rows[0]["BranchName"].ToString();
+            hfEmployeeID.Value = employeeId.ToString();
         }
 
         private void ClearEmployeeFields()
@@ -86,113 +45,118 @@ namespace TemplatingPractice.pages.attendance_management
             txtDesignation.Text = "";
             txtDept.Text = "";
             txtBranch.Text = "";
-            hfEmployeeId.Value = "";
+            hfEmployeeID.Value = "";
         }
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(hfEmployeeId.Value))
+            if (string.IsNullOrWhiteSpace(hfEmployeeID.Value))
             {
                 ShowAlert("Please select a valid Employee ID first.", "error");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(hfDateRangeJson.Value))
+            if (!DateTime.TryParse(txtStartDateEnglish.Text.Trim(), out DateTime startDate) ||
+                !DateTime.TryParse(txtEndDateEnglish.Text.Trim(), out DateTime endDate))
             {
-                ShowAlert("Please select Start Date and Till Date.", "error");
+                ShowAlert("Please provide valid Start and Till dates.", "error");
                 return;
             }
 
-            int employeeId = int.Parse(hfEmployeeId.Value);
-            string attendanceType = rbSignIn.Checked ? "SignIn" : rbSignOut.Checked ? "SignOut" : "Both";
-
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            List<Dictionary<string, string>> dateRange =
-                serializer.Deserialize<List<Dictionary<string, string>>>(hfDateRangeJson.Value);
-
-            DataTable dt = PendingTable;
-
-            foreach (var entry in dateRange)
+            if (endDate < startDate)
             {
-                DateTime adDate = DateTime.ParseExact(entry["ad"], "yyyy-MM-dd", null);
-                string bsDate = entry["bs"];
+                ShowAlert("Till Date must be on or after Start Date.", "error");
+                return;
+            }
 
-                bool alreadyQueued = false;
-                foreach (DataRow r in dt.Rows)
+            int employeeId = Convert.ToInt32(hfEmployeeID.Value);
+
+            DataTable empTable = ble.GetEmployeeById(employeeId);
+            string userType = empTable.Rows.Count > 0 ? empTable.Rows[0]["UserType"].ToString() : "";
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("AttendanceDateEnglish", typeof(DateTime));
+            dt.Columns.Add("AttendanceDateNepali", typeof(string));
+            dt.Columns.Add("ShiftID", typeof(int));
+            dt.Columns.Add("ShiftName", typeof(string));
+            dt.Columns.Add("InTime", typeof(string));
+            dt.Columns.Add("OutTime", typeof(string));
+            dt.Columns.Add("UserType", typeof(string));
+
+            for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
+            {
+                string weekDay = date.DayOfWeek.ToString();
+                DataRow shiftRow = bles.GetShiftForEmployeeAndWeekday(employeeId, weekDay);
+
+                DataRow row = dt.NewRow();
+                row["AttendanceDateEnglish"] = date;
+                row["AttendanceDateNepali"] = NepaliDateConverter.ADToBSString(date);
+
+                if (shiftRow != null)
                 {
-                    if ((int)r["EmployeeID"] == employeeId && (DateTime)r["AttendanceDateEnglish"] == adDate)
-                    {
-                        alreadyQueued = true;
-                        break;
-                    }
+                    row["ShiftID"] = Convert.ToInt32(shiftRow["WorkHourID"]);
+                    row["ShiftName"] = shiftRow["ShiftName"].ToString();
+                    row["InTime"] = shiftRow["StartTime"].ToString();
+                    row["OutTime"] = shiftRow["EndTime"].ToString();
                 }
-                if (alreadyQueued) continue;
+                else
+                {
+                    row["ShiftID"] = DBNull.Value;
+                    row["ShiftName"] = "Not Assigned";
+                    row["InTime"] = "";
+                    row["OutTime"] = "";
+                }
 
-                DataRow newRow = dt.NewRow();
-                newRow["EmployeeID"] = employeeId;
-                newRow["EmployeeName"] = txtEmp.Text;
-                newRow["AttendanceDateEnglish"] = adDate;
-                newRow["AttendanceDateNepali"] = bsDate;
-                newRow["AttendanceType"] = attendanceType;
-                dt.Rows.Add(newRow);
+                row["UserType"] = userType;
+                dt.Rows.Add(row);
             }
 
-            Session[SessionKey] = dt;
-            BindGrid();
-        }
-
-        protected void gvAttendance_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "removeRow")
-            {
-                int index = Convert.ToInt32(e.CommandArgument);
-                DataTable dt = PendingTable;
-                dt.Rows[index].Delete();
-                dt.AcceptChanges();
-                Session[SessionKey] = dt;
-                BindGrid();
-            }
+            gvAttendance.DataSource = dt;
+            gvAttendance.DataBind();
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            DataTable dt = PendingTable;
-
-            if (dt.Rows.Count == 0)
+            if (string.IsNullOrWhiteSpace(hfEmployeeID.Value))
             {
-                ShowAlert("Please add at least one attendance entry before saving.", "error");
+                ShowAlert("Please select a valid Employee ID first.", "error");
                 return;
             }
+
+            int employeeId = Convert.ToInt32(hfEmployeeID.Value);
+            string attendanceType = rbSignIn.Checked ? "SignIn" : rbSignOut.Checked ? "SignOut" : "Both";
 
             int savedCount = 0;
             int skippedCount = 0;
 
-            foreach (DataRow row in dt.Rows)
+            foreach (GridViewRow row in gvAttendance.Rows)
             {
-                int employeeId = (int)row["EmployeeID"];
-                DateTime dateEnglish = (DateTime)row["AttendanceDateEnglish"];
-                string dateNepali = row["AttendanceDateNepali"].ToString();
-                string attendanceType = row["AttendanceType"].ToString();
+                CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
+                if (chkSelect == null || !chkSelect.Checked) continue;
 
-                if (bla.AttendanceExists(employeeId, dateEnglish))
+                DateTime attendanceDate = (DateTime)gvAttendance.DataKeys[row.RowIndex]["AttendanceDateEnglish"];
+                object shiftIdValue = gvAttendance.DataKeys[row.RowIndex]["ShiftID"];
+                int? shiftId = (shiftIdValue == null || shiftIdValue == DBNull.Value)
+                    ? (int?)null
+                    : Convert.ToInt32(shiftIdValue);
+
+                if (bla.AttendanceExists(employeeId, attendanceDate))
                 {
                     skippedCount++;
                     continue;
                 }
 
-                // Look up the employee's shift for this specific weekday
-                // (e.g. "Monday") from tblEmployeeShift. If none is assigned,
-                // shiftId stays null and the attendance record is still saved.
-                string weekDay = dateEnglish.DayOfWeek.ToString();
-                DataRow shiftRow = bles.GetShiftForEmployeeAndWeekday(employeeId, weekDay);
-                int? shiftId = shiftRow != null ? Convert.ToInt32(shiftRow["WorkHourID"]) : (int?)null;
+                string nepaliDate = NepaliDateConverter.ADToBSString(attendanceDate);
 
-                bla.CreateAttendance(employeeId, dateEnglish, dateNepali, attendanceType, shiftId);
+                bla.CreateAttendance(employeeId, attendanceDate, nepaliDate, attendanceType, shiftId);
                 savedCount++;
             }
 
-            Session[SessionKey] = CreatePendingTable();
-            BindGrid();
+            if (savedCount == 0 && skippedCount == 0)
+            {
+                ShowAlert("Please select at least one date to save.", "error");
+                return;
+            }
 
             string message = savedCount + " attendance record(s) saved.";
             if (skippedCount > 0)
@@ -203,19 +167,13 @@ namespace TemplatingPractice.pages.attendance_management
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Session[SessionKey] = CreatePendingTable();
             Response.Redirect("forceAttendance.aspx");
+            return;
         }
 
         private void ShowAlert(string message, string type)
         {
-            string script = $@"
-                Swal.fire({{
-                    title: '{message}',
-                    icon: '{type}',
-                    confirmButtonText: 'OK'
-                }});
-            ";
+            string script = $@"swal('{message}', '{type}');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", script, true);
         }
     }

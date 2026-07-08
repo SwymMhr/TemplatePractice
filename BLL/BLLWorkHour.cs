@@ -14,19 +14,24 @@ namespace TemplatingPractice.BLL
 
         public DataRow GetWorkHourById(int workHourId)
         {
-            SqlParameter[] param = { new SqlParameter("@WorkHourID", workHourId) };
+            SqlParameter[] param = 
+            { 
+                new SqlParameter("@WorkHourID", workHourId) 
+            };
             DataTable dt = DAO.GetTableQuery("SELECT * FROM tblWorkHour WHERE WorkHourID = @WorkHourID", param);
             return (dt != null && dt.Rows.Count > 0) ? dt.Rows[0] : null;
         }
 
         public DataTable GetActiveWorkHour()
         {
-            SqlParameter[] param = { new SqlParameter("@Status", "Active") };
+            SqlParameter[] param = 
+            { 
+                new SqlParameter("@Status", "Active") 
+            };
             return DAO.GetTableQuery("SELECT * FROM tblWorkHour WHERE Status = @Status ORDER BY ShiftName ASC", param);
         }
 
-        public int CreateWorkHour(string shiftName, string startTime, string lateInBy, string totalHour,
-            int lunchTime, string endTime, string lateOutBy, string shift, bool defaultForAllWeekend, string status)
+        public int CreateWorkHour(string shiftName, string startTime, string lateInBy, string totalHour, int lunchTime, string endTime, string lateOutBy, string shift, bool defaultForAllWeekend, string status)
         {
             SqlParameter[] param =
             {
@@ -42,12 +47,7 @@ namespace TemplatingPractice.BLL
                 new SqlParameter("@Status", status)
             };
 
-            string query = @"INSERT INTO tblWorkHour
-                (ShiftName, StartTime, LateInBy, TotalHour, LunchTime, EndTime, LateOutBy, Shift, DefaultForAllWeekend, Status)
-                VALUES
-                (@ShiftName, @StartTime, @LateInBy, @TotalHour, @LunchTime, @EndTime, @LateOutBy, @Shift, @DefaultForAllWeekend, @Status)";
-
-            return DAO.ExecuteQuery(query, param);
+            return DAO.ExecuteQuery("INSERT INTO tblWorkHour (ShiftName, StartTime, LateInBy, TotalHour, LunchTime, EndTime, LateOutBy, Shift, DefaultForAllWeekend, Status) VALUES (@ShiftName, @StartTime, @LateInBy, @TotalHour, @LunchTime, @EndTime, @LateOutBy, @Shift, @DefaultForAllWeekend, @Status)", param);
         }
 
         public int UpdateStatus(int workHourId, string status)

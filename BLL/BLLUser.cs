@@ -9,7 +9,7 @@ namespace TemplatingPractice.BLL
 {
     public class BLLUser
     {
-        public DataTable GetAllUser(int userid)
+        public DataTable GetAllUser()
         {
             return DAO.GetTableQuery("SELECT * FROM tblUSer", null);
         }
@@ -34,7 +34,7 @@ namespace TemplatingPractice.BLL
                 new SqlParameter("@Password",password),
                 new SqlParameter("@Email",email)
             };
-            return DAO.ExecuteQuery("UPDATE FROM tblUser SET Username=@Username, Password=@Password, Email=@Email WHERE UserID=@userid", param);
+            return DAO.ExecuteQuery("UPDATE tblUser SET Username=@Username, Password=@Password, Email=@Email WHERE UserID=@userid", param);
         }
 
         public int DeleteUser(int userid)

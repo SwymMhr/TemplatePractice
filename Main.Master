@@ -4,49 +4,47 @@
 
 <html lang="en">
 <head runat="server">
-    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<%= ResolveUrl("~/assets/images/favicon.ico") %>">
     <title> Avighna Technologies </title>
 
     <!-- Pickers -->
-    <link href="assets/plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet" />
-    <link href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" />
-    <link href="assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <link href="assets/plugins/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet" />
-    <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/plugins/timepicker/bootstrap-timepicker.min.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/plugins/clockpicker/css/bootstrap-clockpicker.min.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css") %>" rel="stylesheet" />
 
-    <link href="assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.css" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.css") %>" rel="stylesheet" />
 
     <!-- Jquery filer css -->
-    <link href="assets/plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
-    <link href="assets/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-
+    <link href="<%= ResolveUrl("~/assets/plugins/jquery.filer/css/jquery.filer.css") %>" rel="stylesheet" />
+    <link href="<%= ResolveUrl("~/assets/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css") %>" rel="stylesheet" />
 
     <!-- DataTables -->
-    <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/buttons.bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/fixedHeader.bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/scroller.bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/dataTables.colVis.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
-
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/jquery.dataTables.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/buttons.bootstrap.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/fixedHeader.bootstrap.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/responsive.bootstrap.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/scroller.bootstrap.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/dataTables.colVis.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/dataTables.bootstrap.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/plugins/datatables/fixedColumns.dataTables.min.css") %>" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="assets/plugins/switchery/switchery.min.css" />
-    <script src="assets/js/jquery-3.4.1.js"></script>
+    <link href="<%= ResolveUrl("~/assets/css/bootstrap.min.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/css/core.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/css/components.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/css/icons.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/css/pages.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/css/menu.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= ResolveUrl("~/assets/css/responsive.css") %>" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<%= ResolveUrl("~/assets/plugins/switchery/switchery.min.css") %>" />
 
-    <script src="assets/js/modernizr.min.js"></script>
+    <script src="<%= ResolveUrl("~/assets/js/modernizr.min.js") %>"></script>
 
     <!-- Sweet Alert-->
-    <script src="assets/sweetalert.js"></script>
+    <link href="<%= ResolveUrl("~/assets/plugins/bootstrap-sweetalert/sweet-alert.css") %>" rel="stylesheet" />
+    <script src="<%= ResolveUrl("~/assets/plugins/bootstrap-sweetalert/sweet-alert.min.js") %>"></script>
 </head>
 <body class="fixed-left">
     <form id="form1" runat="server">
@@ -333,7 +331,7 @@
                                             <span class="menu-arrow"></span>
                                         </a>
                                         <ul class="list-unstyled">
-                                            <li><asp:HyperLink runat="server" NavigateUrl="employeeReport">Employee Report</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/employee-info/employeeReport.aspx">Employee Report</asp:HyperLink></li>
                                             <li><asp:HyperLink runat="server" NavigateUrl="employeeDetailInfo">Employee Detail Info</asp:HyperLink></li>
                                         </ul>
                                     </li>

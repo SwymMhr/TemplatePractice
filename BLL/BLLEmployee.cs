@@ -74,6 +74,47 @@ namespace TemplatingPractice.BLL
             return DAO.GetTableQuery(query, null);
         }
 
+        public DataTable GetEmployeeReport(int branchId, int? departmentId, string status, string employeeType, string sortBy)
+        {
+            string orderBy = sortBy == "EmpID" ? "e.EmployeeID ASC" : "e.EmployeeName ASC";
+
+            string query = $@"SELECT e.EmployeeID,
+                                   e.EmployeeName,
+                                   e.Gender,
+                                   e.Relationship,
+                                   e.DOBEnglish,
+                                   e.JoinDateEnglish,
+                                   d.DesignationName,
+                                   g.GradeName,
+                                   dep.DepartmentName,
+                                   b.BranchName,
+                                   e.EmployeeType,
+                                   e.Status,
+                                   sup.EmployeeName AS HODName,
+                                   e.UserType
+                            FROM tblEmployee e
+                            LEFT JOIN tblDesignation d ON e.DesignationID = d.DesignationID
+                            LEFT JOIN tblGrade g ON e.GradeID = g.GradeID
+                            LEFT JOIN tblDepartment dep ON e.DepartmentID = dep.DepartmentID
+                            LEFT JOIN tblBranch b ON e.BranchID = b.BranchID
+                            LEFT JOIN tblEmployee sup ON e.SupervisorID = sup.EmployeeID
+                            WHERE e.BranchID = @BranchID
+                              AND (@DepartmentID IS NULL OR e.DepartmentID = @DepartmentID)
+                              AND e.Status = @Status
+                              AND e.EmployeeType = @EmployeeType
+                            ORDER BY {orderBy}";
+
+            SqlParameter[] param =
+            {
+                new SqlParameter("@BranchID", branchId),
+                new SqlParameter("@DepartmentID", (object)departmentId ?? DBNull.Value),
+                new SqlParameter("@Status", status),
+                new SqlParameter("@EmployeeType", employeeType)
+            };
+
+            return DAO.GetTableQuery(query, param);
+        }
+
         public DataTable GetEmployeeByStatus(string status)
         {
             SqlParameter[] param =

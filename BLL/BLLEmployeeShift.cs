@@ -18,7 +18,7 @@ namespace TemplatingPractice.BLL
         }
 
         // Used by forceAttendance.aspx.cs to find which shift an employee
-        // is on for a given weekday, so ShiftID can be populated on save.
+        // is on for a given weekday, so ShiftID, ShiftName, and times can be shown.
         public DataRow GetShiftForEmployeeAndWeekday(int employeeId, string weekDay)
         {
             SqlParameter[] param =
@@ -27,7 +27,7 @@ namespace TemplatingPractice.BLL
                 new SqlParameter("@WeekDay", weekDay)
             };
             DataTable dt = DAO.GetTableQuery(@"
-                SELECT es.WorkHourID, w.ShiftName
+                SELECT es.WorkHourID, w.ShiftName, w.StartTime, w.EndTime
                 FROM tblEmployeeShift es
                 JOIN tblWorkHour w ON es.WorkHourID = w.WorkHourID
                 WHERE es.EmployeeID = @EmployeeID AND es.WeekDay = @WeekDay", param);

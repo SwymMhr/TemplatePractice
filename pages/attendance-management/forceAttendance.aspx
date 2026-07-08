@@ -61,18 +61,10 @@
                                 </div>
                             </div>
 
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
+                            <asp:HiddenField ID="hfEmployeeID" runat="server" />
 
-                    <div class="form-group hidden">
-                        <label class="control-label col-md-2">Shift <span style="color: red">*</span></label>
-                        <div class="col-md-5">
-                            <asp:DropDownList ID="ddlShift" runat="server" CssClass="form-control">
-                                <asp:ListItem Text="First" Value="1" />
-                                <asp:ListItem Text="Second" Value="2" />
-                            </asp:DropDownList>
-                        </div>
-                    </div>
+                         </ContentTemplate>
+                    </asp:UpdatePanel>
 
                     <div class="form-group">
                         <label class="control-label col-md-2">Start Date <span style="color: red">*</span></label>
@@ -113,9 +105,6 @@
                 </div>
                 <!-- end well -->
 
-                <asp:HiddenField ID="hfEmployeeId" runat="server" />
-                <asp:HiddenField ID="hfDateRangeJson" runat="server" />
-
                 <asp:UpdatePanel ID="upnlAttendance" runat="server">
                     <ContentTemplate>
 
@@ -127,47 +116,47 @@
                                 <asp:RadioButton ID="rbBoth" runat="server" GroupName="AttendanceType" Text="Both" Checked="true" />
                             </div>
                         </div>
-
+                        
                         <div class="form-group">
                             <div class="col-md-2 col-md-offset-10">
-                                <asp:Button ID="btnAdd" runat="server" Text="+" CssClass="btn btn-info" OnClick="btnAdd_Click" OnClientClick="return prepareAttendanceRange();" />
+                                <asp:Button ID="btnAdd" runat="server" Text="+" CssClass="btn btn-info" OnClick="btnAdd_Click" />
                             </div>
                         </div>
 
-                        <asp:Panel ID="pnlAttendanceList" runat="server" Visible="false">
-
+                        <div class="row">
                             <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="table-responsive">
-                                            <asp:GridView ID="gvAttendance" runat="server"
-                                                CssClass="table table-striped table-colored table-info"
-                                                AutoGenerateColumns="false"
-                                                GridLines="None"
-                                                EmptyDataText="No attendance entries added yet."
-                                                OnRowCommand="gvAttendance_RowCommand"
-                                                UseAccessibleHeader="true">
-                                                <Columns>
-                                                    <asp:TemplateField HeaderText="S.N">
-                                                        <ItemTemplate><%# Container.DataItemIndex + 1 %></ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:BoundField DataField="EmployeeName" HeaderText="Employee" />
-                                                    <asp:BoundField DataField="AttendanceDateEnglish" HeaderText="Date (AD)" DataFormatString="{0:yyyy-MM-dd}" />
-                                                    <asp:BoundField DataField="AttendanceDateNepali" HeaderText="Date (BS)" />
-                                                    <asp:BoundField DataField="AttendanceType" HeaderText="Type" />
-                                                    <asp:TemplateField HeaderText="Actions">
-                                                        <ItemTemplate>
-                                                            <asp:LinkButton ID="lnkRemove" runat="server" CssClass="btn btn-danger btn-xs" CommandName="removeRow" CommandArgument="<%# Container.DataItemIndex %>">Remove</asp:LinkButton>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                </Columns>
-                                            </asp:GridView>
-                                        </div>
-                                    </div>
+                                <div class="table-responsive">
+                                    <asp:GridView ID="gvAttendance" runat="server"
+                                        CssClass="table table-striped table-bordered table-hover table-responsive table-colored table-info"
+                                        AutoGenerateColumns="false"
+                                        DataKeyNames="AttendanceDateEnglish,ShiftID"
+                                        GridLines="None"
+                                        EmptyDataText="No attendance entries added yet."
+                                        UseAccessibleHeader="true">
+                                        <HeaderStyle />
+
+                                        <Columns>
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <input type="checkbox" onclick="checkAll(this)" /> All
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="chkSelect" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="AttendanceDateEnglish" HeaderText="Date (AD)" DataFormatString="{0:yyyy-MM-dd}" />
+                                            <asp:BoundField DataField="AttendanceDateNepali" HeaderText="Date (BS)" />
+                                            <asp:BoundField DataField="ShiftName" HeaderText="Shift" />
+                                            <asp:BoundField DataField="InTime" HeaderText="In Time" />
+                                            <asp:BoundField DataField="OutTime" HeaderText="Out Time" />
+                                            <asp:BoundField DataField="UserType" HeaderText="User Type" />
+                                        </Columns>
+                                    </asp:GridView>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-md-8 col-md-offset-4">
+                        <div class="col-md-8 col-md-offset-4">
                                 <div class="col-md-3">
                                     <asp:Button ID="btnSave" runat="server" Text="Save" CssClass="btn btn-success col-md-12" OnClick="btnSave_Click" />
                                 </div>
@@ -176,10 +165,9 @@
                                 </div>
                             </div>
 
-                        </asp:Panel>
-
                     </ContentTemplate>
                 </asp:UpdatePanel>
+               
 
             </div>
             <!-- end form-horizontal -->
@@ -195,8 +183,19 @@
 
     <script src="<%= ResolveUrl("~/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js") %>"></script>
     <script src="<%= ResolveUrl("~/assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.js") %>" type="text/javascript"></script>
+    <script src="<%= ResolveUrl("~/assets/plugins/moment/moment.js") %>"></script>
 
     <script type="text/javascript">
+        function checkAll(objRef) {
+            var GridView = objRef.parentNode.parentNode.parentNode;
+            var inputList = GridView.getElementsByTagName("input");
+            for (var i = 0; i < inputList.length; i++) {
+                if (inputList[i].type == "checkbox" && objRef != inputList[i]) {
+                    inputList[i].checked = objRef.checked;
+                }
+            }
+        }
+
         $(document).ready(function () {
 
             // Start Date pair
@@ -246,42 +245,6 @@
             });
 
         });
-    </script>
-
-    <script type="text/javascript">
-        function prepareAttendanceRange() {
-            var start = $('.englishDate1').val();
-            var end = $('.englishDate2').val();
-
-            if (!start || !end) {
-                alert('Please select both Start Date and Till Date.');
-                return false;
-            }
-
-            var startDate = moment(start, 'YYYY-MM-DD');
-            var endDate = moment(end, 'YYYY-MM-DD');
-
-            if (!startDate.isValid() || !endDate.isValid()) {
-                alert('Please enter valid dates.');
-                return false;
-            }
-            if (endDate.isBefore(startDate)) {
-                alert('Till Date must be on or after Start Date.');
-                return false;
-            }
-
-            var dates = [];
-            var current = startDate.clone();
-            while (current.isSameOrBefore(endDate)) {
-                var adStr = current.format('YYYY-MM-DD');
-                var bsStr = NepaliFunctions.AD2BS(adStr, 'YYYY-MM-DD', 'YYYY-MM-DD');
-                dates.push({ ad: adStr, bs: bsStr });
-                current.add(1, 'days');
-            }
-
-            document.getElementById('<%= hfDateRangeJson.ClientID %>').value = JSON.stringify(dates);
-            return true;
-        }
     </script>
 
 </asp:Content>
