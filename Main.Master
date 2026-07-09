@@ -306,9 +306,9 @@
                                             <span class="menu-arrow"></span>
                                         </a>
                                         <ul class="list-unstyled">
-                                            <li><asp:HyperLink runat="server" NavigateUrl="quickAttendance">Quick Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/quickAttendance.aspx">Quick Attendance</asp:HyperLink></li>
                                             <li><asp:HyperLink runat="server" NavigateUrl="monthlyAttendance">Monthly Attendance</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="datewiseAttendance">Datewise Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/datewiseAttendance.aspx">Datewise Attendance</asp:HyperLink></li>
                                             <li><asp:HyperLink runat="server" NavigateUrl="dailyAttendance">Daily Attendance</asp:HyperLink></li>
                                         </ul>
                                     </li>

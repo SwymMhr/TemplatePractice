@@ -183,23 +183,12 @@
 
     <script src="<%= ResolveUrl("~/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js") %>"></script>
     <script src="<%= ResolveUrl("~/assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.js") %>" type="text/javascript"></script>
-    <script src="<%= ResolveUrl("~/assets/plugins/moment/moment.js") %>"></script>
 
     <script type="text/javascript">
-        function checkAll(objRef) {
-            var GridView = objRef.parentNode.parentNode.parentNode;
-            var inputList = GridView.getElementsByTagName("input");
-            for (var i = 0; i < inputList.length; i++) {
-                if (inputList[i].type == "checkbox" && objRef != inputList[i]) {
-                    inputList[i].checked = objRef.checked;
-                }
-            }
-        }
-
         $(document).ready(function () {
 
             // Start Date pair
-            $('.englishDate1').change(function () {
+            $('.englishDate1').on('changeDate change', function () {
                 var a = $('.englishDate1').val();
                 if (a != "") {
                     $('.nepaliDate1').val(NepaliFunctions.AD2BS(a));
@@ -222,7 +211,7 @@
             });
 
             // Till Date pair
-            $('.englishDate2').change(function () {
+            $('.englishDate2').on('changeDate change', function () {
                 var a = $('.englishDate2').val();
                 if (a != "") {
                     $('.nepaliDate2').val(NepaliFunctions.AD2BS(a));

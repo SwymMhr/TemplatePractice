@@ -1078,6 +1078,9 @@
     <Content Include="pages\other-pages\page-logout.aspx" />
     <Content Include="pages\other-pages\page-recoverpw.aspx" />
     <Content Include="pages\other-pages\page-register.aspx" />
+    <Content Include="pages\report\attendance-report\datewiseAttendance.aspx" />
+    <Content Include="pages\report\attendance-report\datewiseAttendanceList.aspx" />
+    <Content Include="pages\report\attendance-report\quickAttendance.aspx" />
     <Content Include="pages\report\employee-info\employeeReport.aspx" />
     <Content Include="pages\system-setup\addBranch.aspx" />
     <Content Include="pages\system-setup\addDepartment.aspx" />
@@ -1190,6 +1193,27 @@
       <DependentUpon>page-recoverpw.aspx</DependentUpon>
     </Compile>
     <Compile Include="BLL\BLLBranch.cs" />
+    <Compile Include="pages\report\attendance-report\datewiseAttendance.aspx.cs">
+      <DependentUpon>datewiseAttendance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\datewiseAttendance.aspx.designer.cs">
+      <DependentUpon>datewiseAttendance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\datewiseAttendanceList.aspx.cs">
+      <DependentUpon>datewiseAttendanceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\datewiseAttendanceList.aspx.designer.cs">
+      <DependentUpon>datewiseAttendanceList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\quickAttendance.aspx.cs">
+      <DependentUpon>quickAttendance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\quickAttendance.aspx.designer.cs">
+      <DependentUpon>quickAttendance.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\report\employee-info\employeeReport.aspx.cs">
       <DependentUpon>employeeReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

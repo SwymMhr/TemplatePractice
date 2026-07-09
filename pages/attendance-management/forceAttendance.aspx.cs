@@ -71,8 +71,14 @@ namespace TemplatingPractice.pages.attendance_management
 
             int employeeId = Convert.ToInt32(hfEmployeeID.Value);
 
-            DataTable empTable = ble.GetEmployeeById(employeeId);
-            string userType = empTable.Rows.Count > 0 ? empTable.Rows[0]["UserType"].ToString() : "";
+            string userType = ble.GetEmployeeById(employeeId).Rows[0]["UserType"].ToString();
+
+            DataTable shiftsTable = bles.GetEmployeeShifts(employeeId);
+            Dictionary<string, DataRow> shiftsByWeekDay = new Dictionary<string, DataRow>();
+            foreach (DataRow shiftRow in shiftsTable.Rows)
+            {
+                shiftsByWeekDay[shiftRow["WeekDay"].ToString()] = shiftRow;
+            }
 
             DataTable dt = new DataTable();
             dt.Columns.Add("AttendanceDateEnglish", typeof(DateTime));
@@ -85,19 +91,19 @@ namespace TemplatingPractice.pages.attendance_management
 
             for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
             {
-                string weekDay = date.DayOfWeek.ToString();
-                DataRow shiftRow = bles.GetShiftForEmployeeAndWeekday(employeeId, weekDay);
-
                 DataRow row = dt.NewRow();
                 row["AttendanceDateEnglish"] = date;
                 row["AttendanceDateNepali"] = NepaliDateConverter.ADToBSString(date);
+                row["UserType"] = userType;
 
-                if (shiftRow != null)
+                string weekDay = date.DayOfWeek.ToString();
+                if (shiftsByWeekDay.ContainsKey(weekDay))
                 {
-                    row["ShiftID"] = Convert.ToInt32(shiftRow["WorkHourID"]);
-                    row["ShiftName"] = shiftRow["ShiftName"].ToString();
-                    row["InTime"] = shiftRow["StartTime"].ToString();
-                    row["OutTime"] = shiftRow["EndTime"].ToString();
+                    DataRow shift = shiftsByWeekDay[weekDay];
+                    row["ShiftID"] = Convert.ToInt32(shift["WorkHourID"]);
+                    row["ShiftName"] = shift["ShiftName"].ToString();
+                    row["InTime"] = shift["StartTime"].ToString();
+                    row["OutTime"] = shift["EndTime"].ToString();
                 }
                 else
                 {
@@ -107,7 +113,6 @@ namespace TemplatingPractice.pages.attendance_management
                     row["OutTime"] = "";
                 }
 
-                row["UserType"] = userType;
                 dt.Rows.Add(row);
             }
 
@@ -125,6 +130,10 @@ namespace TemplatingPractice.pages.attendance_management
 
             int employeeId = Convert.ToInt32(hfEmployeeID.Value);
             string attendanceType = rbSignIn.Checked ? "SignIn" : rbSignOut.Checked ? "SignOut" : "Both";
+
+            // TODO: replace with however your session actually stores the logged-in
+            // user's display name once the tblUser/tblEmployee auth question is settled.
+            string createdBy = Session["Username"] != null ? Session["Username"].ToString() : "Admin";
 
             int savedCount = 0;
             int skippedCount = 0;
@@ -148,7 +157,7 @@ namespace TemplatingPractice.pages.attendance_management
 
                 string nepaliDate = NepaliDateConverter.ADToBSString(attendanceDate);
 
-                bla.CreateAttendance(employeeId, attendanceDate, nepaliDate, attendanceType, shiftId);
+                bla.CreateAttendance(employeeId, attendanceDate, nepaliDate, attendanceType, shiftId, createdBy);
                 savedCount++;
             }
 

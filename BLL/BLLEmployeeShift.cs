@@ -9,7 +9,10 @@ namespace TemplatingPractice.BLL
     {
         public DataTable GetShiftsByEmployee(int employeeId)
         {
-            SqlParameter[] param = { new SqlParameter("@EmployeeID", employeeId) };
+            SqlParameter[] param = 
+            { 
+                new SqlParameter("@EmployeeID", employeeId) 
+            };
             return DAO.GetTableQuery(@"
                 SELECT es.EmployeeID, es.WeekDay, es.WorkHourID, w.ShiftName
                 FROM tblEmployeeShift es
@@ -17,8 +20,6 @@ namespace TemplatingPractice.BLL
                 WHERE es.EmployeeID = @EmployeeID", param);
         }
 
-        // Used by forceAttendance.aspx.cs to find which shift an employee
-        // is on for a given weekday, so ShiftID, ShiftName, and times can be shown.
         public DataRow GetShiftForEmployeeAndWeekday(int employeeId, string weekDay)
         {
             SqlParameter[] param =
@@ -41,13 +42,10 @@ namespace TemplatingPractice.BLL
                 new SqlParameter("@EmployeeID", employeeId),
                 new SqlParameter("@WeekDay", weekDay)
             };
-            DataTable dt = DAO.GetTableQuery(
-                "SELECT 1 FROM tblEmployeeShift WHERE EmployeeID = @EmployeeID AND WeekDay = @WeekDay", param);
+            DataTable dt = DAO.GetTableQuery("SELECT 1 FROM tblEmployeeShift WHERE EmployeeID = @EmployeeID AND WeekDay = @WeekDay", param);
             return dt.Rows.Count > 0;
         }
 
-        // Insert if this employee/weekday combo has no shift yet, otherwise
-        // overwrite the existing one — this is the "just like Branch/Department" behavior.
         public int UpsertEmployeeShift(int employeeId, string weekDay, int workHourId)
         {
             SqlParameter[] param =
@@ -64,9 +62,21 @@ namespace TemplatingPractice.BLL
                     param);
             }
 
-            return DAO.ExecuteQuery(
-                "INSERT INTO tblEmployeeShift (EmployeeID, WeekDay, WorkHourID) VALUES (@EmployeeID, @WeekDay, @WorkHourID)",
-                param);
+            return DAO.ExecuteQuery("INSERT INTO tblEmployeeShift (EmployeeID, WeekDay, WorkHourID) VALUES (@EmployeeID, @WeekDay, @WorkHourID)", param);
+        }
+
+        public DataTable GetEmployeeShifts(int employeeId)
+        {
+            SqlParameter[] param =
+            {
+                new SqlParameter("@EmployeeID", employeeId)
+            };
+
+            return DAO.GetTableQuery(@"
+                SELECT es.WeekDay, es.WorkHourID, w.ShiftName, w.StartTime, w.EndTime
+                FROM tblEmployeeShift es
+                JOIN tblWorkHour w ON w.WorkHourID = es.WorkHourID
+                WHERE es.EmployeeID = @EmployeeID", param);
         }
 
         public int DeleteEmployeeShift(int employeeId, string weekDay)
@@ -76,13 +86,15 @@ namespace TemplatingPractice.BLL
                 new SqlParameter("@EmployeeID", employeeId),
                 new SqlParameter("@WeekDay", weekDay)
             };
-            return DAO.ExecuteQuery(
-                "DELETE FROM tblEmployeeShift WHERE EmployeeID = @EmployeeID AND WeekDay = @WeekDay", param);
+            return DAO.ExecuteQuery("DELETE FROM tblEmployeeShift WHERE EmployeeID = @EmployeeID AND WeekDay = @WeekDay", param);
         }
 
         public int DeleteAllShiftsForEmployee(int employeeId)
         {
-            SqlParameter[] param = { new SqlParameter("@EmployeeID", employeeId) };
+            SqlParameter[] param = 
+            { 
+                new SqlParameter("@EmployeeID", employeeId) 
+            };
             return DAO.ExecuteQuery("DELETE FROM tblEmployeeShift WHERE EmployeeID = @EmployeeID", param);
         }
     }

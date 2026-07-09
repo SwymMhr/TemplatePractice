@@ -92,7 +92,7 @@ namespace TemplatingPractice.BLL
             if (dt.Rows.Count == 0)
                 return null;
 
-            string newPlainPassword = GenerateRandomPassword(10);
+            string newPlainPassword = GenerateRandomPassword(7);
             string hashed = RegisterForm.HashPassword(newPlainPassword);
 
             int rows = UpdatePasswordByEmail(email, hashed);
