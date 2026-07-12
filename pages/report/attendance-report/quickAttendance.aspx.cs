@@ -37,8 +37,37 @@ namespace TemplatingPractice.pages.report.attendance_info
             ddlBranch.Items.Insert(0, new ListItem("Select Branch", ""));
         }
 
+        private void BindDepartmentsForBranch()
+        {
+            ddlDepartment.DataSource = blDepartment.GetAllDepartment();
+            ddlDepartment.DataTextField = "DepartmentName";
+            ddlDepartment.DataValueField = "DepartmentID";
+            ddlDepartment.DataBind();
+            ddlDepartment.Items.Insert(0, new ListItem("Select Department", ""));
+            ddlDepartment.Enabled = true;
+        }
+
+        private void BindEmployeesForBranchDepartment(int branchId, int departmentId)
+        {
+            ddlEmployee.DataSource = ble.GetEmployeeByBranchAndDepartment(branchId, departmentId);
+            ddlEmployee.DataTextField = "EmployeeName";
+            ddlEmployee.DataValueField = "EmployeeID";
+            ddlEmployee.DataBind();
+            ddlEmployee.Items.Insert(0, new ListItem("Select Employee", ""));
+            ddlEmployee.Enabled = true;
+        }
+
+        private void ClearReport()
+        {
+            pnlResults.Visible = false;
+            gvReport.DataSource = null;
+            gvReport.DataBind();
+        }
+
         protected void ddlBranch_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearReport();
+
             ddlDepartment.Items.Clear();
             ddlEmployee.Items.Clear();
             ddlEmployee.Enabled = false;
@@ -50,16 +79,13 @@ namespace TemplatingPractice.pages.report.attendance_info
                 return;
             }
 
-            ddlDepartment.DataSource = blDepartment.GetAllDepartment();
-            ddlDepartment.DataTextField = "DepartmentName";
-            ddlDepartment.DataValueField = "DepartmentID";
-            ddlDepartment.DataBind();
-            ddlDepartment.Items.Insert(0, new ListItem("Select Department", ""));
-            ddlDepartment.Enabled = true;
+            BindDepartmentsForBranch();
         }
 
         protected void ddlDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearReport();
+
             ddlEmployee.Items.Clear();
             ClearEmployeeSelection();
 
@@ -72,16 +98,13 @@ namespace TemplatingPractice.pages.report.attendance_info
             int branchId = int.Parse(ddlBranch.SelectedValue);
             int departmentId = int.Parse(ddlDepartment.SelectedValue);
 
-            ddlEmployee.DataSource = ble.GetEmployeeByBranchAndDepartment(branchId, departmentId);
-            ddlEmployee.DataTextField = "EmployeeName";
-            ddlEmployee.DataValueField = "EmployeeID";
-            ddlEmployee.DataBind();
-            ddlEmployee.Items.Insert(0, new ListItem("Select Employee", ""));
-            ddlEmployee.Enabled = true;
+            BindEmployeesForBranchDepartment(branchId, departmentId);
         }
 
         protected void ddlEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearReport();
+
             if (string.IsNullOrWhiteSpace(ddlEmployee.SelectedValue))
             {
                 ClearEmployeeSelection();
@@ -95,6 +118,8 @@ namespace TemplatingPractice.pages.report.attendance_info
 
         protected void txtEmpId_TextChanged(object sender, EventArgs e)
         {
+            ClearReport();
+
             int employeeId;
             if (!int.TryParse(txtEmpId.Text.Trim(), out employeeId))
             {
@@ -102,13 +127,41 @@ namespace TemplatingPractice.pages.report.attendance_info
                 return;
             }
 
-            DataTable dt = ble.GetEmployeeLookupById(employeeId);
-            if (dt.Rows.Count == 0)
+            DataTable empTable = ble.GetEmployeeById(employeeId);
+            if (empTable.Rows.Count == 0)
             {
                 ClearEmployeeSelection();
                 ShowAlert("Employee ID not found.", "error");
                 return;
             }
+
+            DataRow empRow = empTable.Rows[0];
+            int branchId = Convert.ToInt32(empRow["BranchID"]);
+            int departmentId = Convert.ToInt32(empRow["DepartmentID"]);
+
+            BindBranches();
+            if (ddlBranch.Items.FindByValue(branchId.ToString()) == null)
+            {
+                ShowAlert("Employee's branch could not be matched.", "error");
+                return;
+            }
+            ddlBranch.SelectedValue = branchId.ToString();
+
+            BindDepartmentsForBranch();
+            if (ddlDepartment.Items.FindByValue(departmentId.ToString()) == null)
+            {
+                ShowAlert("Employee's department could not be matched.", "error");
+                return;
+            }
+            ddlDepartment.SelectedValue = departmentId.ToString();
+
+            BindEmployeesForBranchDepartment(branchId, departmentId);
+            if (ddlEmployee.Items.FindByValue(employeeId.ToString()) == null)
+            {
+                ShowAlert("Employee could not be matched in the list.", "error");
+                return;
+            }
+            ddlEmployee.SelectedValue = employeeId.ToString();
 
             hfEmployeeId.Value = employeeId.ToString();
         }
@@ -121,9 +174,28 @@ namespace TemplatingPractice.pages.report.attendance_info
 
         protected void btnLoad_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(ddlBranch.SelectedValue))
+            {
+                ShowAlert("Please select a Branch.", "error");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(ddlDepartment.SelectedValue))
+            {
+                ShowAlert("Please select a Department.", "error");
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(hfEmployeeId.Value))
             {
-                ShowAlert("Please select an Employee first.", "error");
+                ShowAlert("Please select an Employee.", "error");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtStartDateEnglish.Text.Trim()) ||
+                string.IsNullOrWhiteSpace(txtEndDateEnglish.Text.Trim()))
+            {
+                ShowAlert("Please select Start and End dates.", "error");
                 return;
             }
 
@@ -173,10 +245,6 @@ namespace TemplatingPractice.pages.report.attendance_info
             lblAbsentDays.Text = absentDays.ToString();
             lblWeekend.Text = weekendDays.ToString();
 
-            // Public Holiday / Leave require tables this project doesn't have
-            // yet (a public holiday calendar and a leave application/approval
-            // table). Left at 0 rather than guessing — see chat notes for
-            // what each needs.
             lblPH.Text = "0";
             lblLeaveCount.Text = "0.00";
             lblWOW.Text = "0";
@@ -184,14 +252,11 @@ namespace TemplatingPractice.pages.report.attendance_info
             lblLWOP.Text = "0";
 
             lblWHRS.Text = totalWorkedHours.ToString("0.00");
-            lblTotalPaybleDays.Text = (presentDays + weekendDays).ToString(); // + PH + Leave, once those exist
+            lblTotalPaybleDays.Text = (presentDays + weekendDays).ToString();
 
             pnlResults.Visible = true;
         }
 
-        // Builds one row per calendar date in [startDate, endDate]. Saturdays
-        // are flagged IsWeekend (and don't count toward Absent). Dates with a
-        // matching tblAttendance record are Present; everything else is Absent.
         private DataTable BuildReportTable(DataTable attendance, DateTime startDate, DateTime endDate,
             out int totalDays, out int presentDays, out int absentDays, out int weekendDays,
             out double totalWorkedHours)
@@ -208,7 +273,7 @@ namespace TemplatingPractice.pages.report.attendance_info
             report.Columns.Add("OutMode", typeof(string));
             report.Columns.Add("WorkedHour", typeof(string));
             report.Columns.Add("DayRemarks", typeof(string));
-            report.Columns.Add("IsWeekend", typeof(bool)); // drives the merged "Weekend Holiday" row in RowDataBound
+            report.Columns.Add("IsWeekend", typeof(bool));
 
             var byDate = new System.Collections.Generic.Dictionary<DateTime, DataRow>();
             foreach (DataRow r in attendance.Rows)
@@ -228,14 +293,11 @@ namespace TemplatingPractice.pages.report.attendance_info
                 reportRow["DateNepali"] = NepaliDateConverter.ADToBSString(date);
                 reportRow["Day"] = date.ToString("ddd");
 
-                bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday; // single weekly-off day per current schema
+                bool isWeekend = date.DayOfWeek == DayOfWeek.Saturday;
                 reportRow["IsWeekend"] = isWeekend;
 
                 if (isWeekend)
                 {
-                    // Weekend rows render as a single merged "Weekend Holiday"
-                    // bar (see gvReport_RowDataBound), so the individual
-                    // in/out fields are irrelevant here and left blank.
                     weekendDays++;
                     reportRow["Roster"] = "";
                     reportRow["InTime"] = "";
@@ -328,9 +390,6 @@ namespace TemplatingPractice.pages.report.attendance_info
             return report;
         }
 
-        // Collapses Weekend and Absent rows into a single merged, centered,
-        // colored cell spanning the whole row (matching the template's look).
-        // Present rows are left alone and render their normal columns.
         protected void gvReport_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType != DataControlRowType.DataRow) return;
@@ -354,10 +413,10 @@ namespace TemplatingPractice.pages.report.attendance_info
             }
             else
             {
-                return; // Present rows: render normally, no merge
+                return;
             }
 
-            const int mergeStartIndex = 2; // first column after Date/Day
+            const int mergeStartIndex = 2;
             int lastIndex = e.Row.Cells.Count - 1;
             int colSpan = lastIndex - mergeStartIndex + 1;
 
@@ -385,13 +444,7 @@ namespace TemplatingPractice.pages.report.attendance_info
 
         private void ShowAlert(string message, string type)
         {
-            string script = $@"
-                Swal.fire({{
-                    title: '{message}',
-                    icon: '{type}',
-                    confirmButtonText: 'OK'
-                }});
-            ";
+            string script = $@"swal('{message}', '{type}');";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", script, true);
         }
     }

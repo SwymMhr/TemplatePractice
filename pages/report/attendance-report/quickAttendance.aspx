@@ -119,43 +119,30 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12 form-group">
-                                                <div class="col-md-6 button-list">
-                                                    <asp:Button ID="btnExport" runat="server" Text="Excel" CssClass="btn btn-success col-md-2" OnClick="btnExport_Click" />
-                                                </div>
-                                            </div>
-
                                             <asp:Panel ID="pnlResults" runat="server" Visible="false">
 
                                                 <div class="col-md-12 form-group">
                                                     <div style="font-weight: bold; text-align: center" class="form-group">
-                                                        From :
-                                                        <asp:Label ID="lblStartDate" runat="server"></asp:Label>
-                                                        To :
-                                                        <asp:Label ID="lblEndDate" runat="server"></asp:Label>
+                                                        From : <asp:Label ID="lblStartDate" runat="server"></asp:Label>
+                                                        To : <asp:Label ID="lblEndDate" runat="server"></asp:Label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12 form-group" style="font-weight: bold;">
                                                     <div class="col-md-12 form-group">
                                                         <div class="col-md-6">
-                                                            Employee :
-                                                            <asp:Label ID="lblEmployee" runat="server"></asp:Label>
-                                                            (<asp:Label ID="lblEmployeeID" runat="server"></asp:Label>)
+                                                            Employee : <asp:Label ID="lblEmployee" runat="server"></asp:Label> (<asp:Label ID="lblEmployeeID" runat="server"></asp:Label>)
                                                         </div>
                                                         <div class="col-md-6">
-                                                            Designation :
-                                                            <asp:Label ID="lblDesignation" runat="server"></asp:Label>
+                                                            Designation : <asp:Label ID="lblDesignation" runat="server"></asp:Label>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 form-group">
                                                         <div class="col-md-6">
-                                                            Department :
-                                                            <asp:Label ID="lblDept" runat="server"></asp:Label>
+                                                            Department : <asp:Label ID="lblDept" runat="server"></asp:Label>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            Branch :
-                                                            <asp:Label ID="lblBranch" runat="server"></asp:Label>
+                                                            Branch : <asp:Label ID="lblBranch" runat="server"></asp:Label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -267,7 +254,7 @@
             });
             $('.englishDate1').datepicker({ format: 'yyyy-mm-dd', autoclose: true, todayHighlight: true });
             $('.nepaliDate1').nepaliDatePicker({
-                npdMonth: true, npdYear: true, npdYearCount: 10,
+                ndpMonth: true, ndpYear: true, ndpYearCount: 10,
                 onChange: function () { $('.englishDate1').val(NepaliFunctions.BS2AD($('.nepaliDate1').val())); }
             });
 
@@ -277,7 +264,7 @@
             });
             $('.englishDate2').datepicker({ format: 'yyyy-mm-dd', autoclose: true, todayHighlight: true });
             $('.nepaliDate2').nepaliDatePicker({
-                npdMonth: true, npdYear: true, npdYearCount: 10,
+                ndpMonth: true, ndpYear: true, ndpYearCount: 10,
                 onChange: function () { $('.englishDate2').val(NepaliFunctions.BS2AD($('.nepaliDate2').val())); }
             });
 

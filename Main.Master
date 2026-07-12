@@ -307,9 +307,9 @@
                                         </a>
                                         <ul class="list-unstyled">
                                             <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/quickAttendance.aspx">Quick Attendance</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="monthlyAttendance">Monthly Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/monthlyAttendance.aspx">Monthly Attendance</asp:HyperLink></li>
                                             <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/datewiseAttendance.aspx">Datewise Attendance</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="dailyAttendance">Daily Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/dailyAttendance.aspx">Daily Attendance</asp:HyperLink></li>
                                         </ul>
                                     </li>
 
@@ -332,7 +332,7 @@
                                         </a>
                                         <ul class="list-unstyled">
                                             <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/employee-info/employeeReport.aspx">Employee Report</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="employeeDetailInfo">Employee Detail Info</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/employee-info/employeeDetailInfo.aspx">Employee Detail Info</asp:HyperLink></li>
                                         </ul>
                                     </li>
 
