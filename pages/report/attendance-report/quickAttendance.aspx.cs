@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,6 +20,7 @@ namespace TemplatingPractice.pages.report.attendance_info
             if (!IsPostBack)
             {
                 BindBranches();
+                RegisterEmployeeData();
 
                 DateTime today = DateTime.Today;
                 txtStartDateEnglish.Text = today.ToString("yyyy-MM-dd");
@@ -44,17 +46,33 @@ namespace TemplatingPractice.pages.report.attendance_info
             ddlDepartment.DataValueField = "DepartmentID";
             ddlDepartment.DataBind();
             ddlDepartment.Items.Insert(0, new ListItem("Select Department", ""));
-            ddlDepartment.Enabled = true;
         }
 
-        private void BindEmployeesForBranchDepartment(int branchId, int departmentId)
+        /// <summary>
+        /// Loads the full employee list (ID, Name, BranchID, DepartmentID) once on initial page load
+        /// and pushes it to the client as a JS array (allEmployees) for client-side search/filtering.
+        /// </summary>
+        private void RegisterEmployeeData()
         {
-            ddlEmployee.DataSource = ble.GetEmployeeByBranchAndDepartment(branchId, departmentId);
-            ddlEmployee.DataTextField = "EmployeeName";
-            ddlEmployee.DataValueField = "EmployeeID";
-            ddlEmployee.DataBind();
-            ddlEmployee.Items.Insert(0, new ListItem("Select Employee", ""));
-            ddlEmployee.Enabled = true;
+            DataTable dt = ble.GetAllEmployee();
+
+            var list = new List<object>();
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(new
+                {
+                    id = Convert.ToInt32(row["EmployeeID"]),
+                    name = row["EmployeeName"].ToString(),
+                    branchId = Convert.ToInt32(row["BranchID"]),
+                    departmentId = Convert.ToInt32(row["DepartmentID"])
+                });
+            }
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            string json = serializer.Serialize(list);
+
+            ClientScriptManager cs = Page.ClientScript;
+            cs.RegisterStartupScript(this.GetType(), "employeeData", "var allEmployees = " + json + ";", true);
         }
 
         private void ClearReport()
@@ -64,18 +82,22 @@ namespace TemplatingPractice.pages.report.attendance_info
             gvReport.DataBind();
         }
 
+        private void ClearEmployeeSelection()
+        {
+            hfEmployeeId.Value = "";
+            txtEmployeeSearch.Text = "";
+            txtEmpId.Text = "";
+        }
+
         protected void ddlBranch_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearReport();
 
             ddlDepartment.Items.Clear();
-            ddlEmployee.Items.Clear();
-            ddlEmployee.Enabled = false;
             ClearEmployeeSelection();
 
             if (string.IsNullOrWhiteSpace(ddlBranch.SelectedValue))
             {
-                ddlDepartment.Enabled = false;
                 return;
             }
 
@@ -85,35 +107,7 @@ namespace TemplatingPractice.pages.report.attendance_info
         protected void ddlDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearReport();
-
-            ddlEmployee.Items.Clear();
             ClearEmployeeSelection();
-
-            if (string.IsNullOrWhiteSpace(ddlBranch.SelectedValue) || string.IsNullOrWhiteSpace(ddlDepartment.SelectedValue))
-            {
-                ddlEmployee.Enabled = false;
-                return;
-            }
-
-            int branchId = int.Parse(ddlBranch.SelectedValue);
-            int departmentId = int.Parse(ddlDepartment.SelectedValue);
-
-            BindEmployeesForBranchDepartment(branchId, departmentId);
-        }
-
-        protected void ddlEmployee_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ClearReport();
-
-            if (string.IsNullOrWhiteSpace(ddlEmployee.SelectedValue))
-            {
-                ClearEmployeeSelection();
-                return;
-            }
-
-            int employeeId = int.Parse(ddlEmployee.SelectedValue);
-            hfEmployeeId.Value = employeeId.ToString();
-            txtEmpId.Text = employeeId.ToString();
         }
 
         protected void txtEmpId_TextChanged(object sender, EventArgs e)
@@ -155,21 +149,8 @@ namespace TemplatingPractice.pages.report.attendance_info
             }
             ddlDepartment.SelectedValue = departmentId.ToString();
 
-            BindEmployeesForBranchDepartment(branchId, departmentId);
-            if (ddlEmployee.Items.FindByValue(employeeId.ToString()) == null)
-            {
-                ShowAlert("Employee could not be matched in the list.", "error");
-                return;
-            }
-            ddlEmployee.SelectedValue = employeeId.ToString();
-
             hfEmployeeId.Value = employeeId.ToString();
-        }
-
-        private void ClearEmployeeSelection()
-        {
-            hfEmployeeId.Value = "";
-            txtEmpId.Text = "";
+            txtEmployeeSearch.Text = empRow["EmployeeName"].ToString() + " (" + employeeId + ")";
         }
 
         protected void btnLoad_Click(object sender, EventArgs e)

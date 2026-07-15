@@ -1078,6 +1078,8 @@
     <Content Include="pages\other-pages\page-logout.aspx" />
     <Content Include="pages\other-pages\page-recoverpw.aspx" />
     <Content Include="pages\other-pages\page-register.aspx" />
+    <Content Include="pages\report\attendance-report\dailyAttendance.aspx" />
+    <Content Include="pages\report\attendance-report\dailyAttendanceList.aspx" />
     <Content Include="pages\report\attendance-report\datewiseAttendance.aspx" />
     <Content Include="pages\report\attendance-report\datewiseAttendanceList.aspx" />
     <Content Include="pages\report\attendance-report\monthlyAttendance.aspx" />
@@ -1195,6 +1197,20 @@
       <DependentUpon>page-recoverpw.aspx</DependentUpon>
     </Compile>
     <Compile Include="BLL\BLLBranch.cs" />
+    <Compile Include="pages\report\attendance-report\dailyAttendance.aspx.cs">
+      <DependentUpon>dailyAttendance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\dailyAttendance.aspx.designer.cs">
+      <DependentUpon>dailyAttendance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\dailyAttendanceList.aspx.cs">
+      <DependentUpon>dailyAttendanceList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\attendance-report\dailyAttendanceList.aspx.designer.cs">
+      <DependentUpon>dailyAttendanceList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\report\attendance-report\datewiseAttendance.aspx.cs">
       <DependentUpon>datewiseAttendance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

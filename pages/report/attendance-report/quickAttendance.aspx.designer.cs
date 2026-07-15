@@ -78,13 +78,13 @@ namespace TemplatingPractice.pages.report.attendance_info
         protected global::System.Web.UI.WebControls.DropDownList ddlDepartment;
 
         /// <summary>
-        /// ddlEmployee control.
+        /// txtEmployeeSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlEmployee;
+        protected global::System.Web.UI.WebControls.TextBox txtEmployeeSearch;
 
         /// <summary>
         /// txtEmpId control.

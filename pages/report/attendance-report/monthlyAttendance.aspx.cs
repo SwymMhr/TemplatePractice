@@ -172,7 +172,7 @@ namespace TemplatingPractice.pages.report.attendance_report
                 return;
             }
 
-            string url = "datewiseAttendanceList.aspx"
+            string url = "monthlyAttendanceList.aspx"
                 + "?BranchID=" + ddlBranch.SelectedValue
                 + "&DepartmentID=" + ddlDepartment.SelectedValue
                 + "&StartDate=" + startDate.ToString("yyyy-MM-dd")

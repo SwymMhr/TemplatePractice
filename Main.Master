@@ -15,7 +15,7 @@
     <link href="<%= ResolveUrl("~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css") %>" rel="stylesheet" />
 
     <link href="<%= ResolveUrl("~/assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.css") %>" rel="stylesheet" />
-
+    
     <!-- Jquery filer css -->
     <link href="<%= ResolveUrl("~/assets/plugins/jquery.filer/css/jquery.filer.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/assets/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css") %>" rel="stylesheet" />

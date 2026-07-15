@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 using TemplatingPractice.DAL;
+using TemplatingPractice.pages.hr_management;
 
 namespace TemplatingPractice.BLL
 {
