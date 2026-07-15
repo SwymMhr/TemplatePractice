@@ -31,7 +31,7 @@ namespace TemplatingPractice.pages.hr_management
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addEmployee.aspx");
+            Response.Redirect("~/addEmployee");
         }
 
         protected void gvEmployees_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -39,7 +39,7 @@ namespace TemplatingPractice.pages.hr_management
             if (e.CommandName == "viewEmployee")
             {
                 int employeeID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("employeeDetails.aspx?EmployeeID=" + employeeID, false);
+                Response.Redirect("~/employeeDetails?EmployeeID=" + employeeID, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }

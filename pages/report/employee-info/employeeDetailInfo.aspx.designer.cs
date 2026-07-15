@@ -7,48 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TemplatingPractice.pages.report.attendance_report
+namespace TemplatingPractice.pages.report.employee_info
 {
 
 
-    public partial class monthlyAttendance
+    public partial class employeeDetailInfo
     {
-
-        /// <summary>
-        /// txtStartDateNepali control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStartDateNepali;
-
-        /// <summary>
-        /// txtStartDateEnglish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStartDateEnglish;
-
-        /// <summary>
-        /// txtEndDateNepali control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEndDateNepali;
-
-        /// <summary>
-        /// txtEndDateEnglish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEndDateEnglish;
 
         /// <summary>
         /// upPnl control.

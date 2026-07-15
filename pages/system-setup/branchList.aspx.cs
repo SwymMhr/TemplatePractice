@@ -33,7 +33,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addBranch.aspx");
+            Response.Redirect("~/addBranch");
         }
 
         protected void gvBranch_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -41,7 +41,7 @@ namespace TemplatingPractice.pages.system_setup
             if (e.CommandName == "editBranch")
             {
                 int branchID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("editBranch.aspx?BranchID=" + branchID, false);
+                Response.Redirect("~/editBranch?BranchID=" + branchID, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }

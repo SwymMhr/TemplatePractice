@@ -27,7 +27,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = bld.CreateDepartment(Departmentcode, Departmentname, status);
             if (result > 0)
             {
-                Response.Redirect("DepartmentList.aspx");
+                Response.Redirect("~/DepartmentList");
             }
             else
             {
@@ -38,7 +38,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("DepartmentList.aspx");
+            Response.Redirect("~/DepartmentList");
         }
 
         private void ShowAlert(string message, string type)

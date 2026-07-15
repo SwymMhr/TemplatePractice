@@ -7,119 +7,146 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TemplatingPractice.pages.report.attendance_report
+namespace TemplatingPractice.pages.report.employee_info
 {
 
 
-    public partial class monthlyAttendance
+    public partial class viewEmployeeDetailInfo
     {
 
         /// <summary>
-        /// txtStartDateNepali control.
+        /// btnNew control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStartDateNepali;
+        protected global::System.Web.UI.WebControls.Button btnNew;
 
         /// <summary>
-        /// txtStartDateEnglish control.
+        /// lblEmployeeId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtStartDateEnglish;
+        protected global::System.Web.UI.WebControls.Label lblEmployeeId;
 
         /// <summary>
-        /// txtEndDateNepali control.
+        /// lblFullName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEndDateNepali;
+        protected global::System.Web.UI.WebControls.Label lblFullName;
 
         /// <summary>
-        /// txtEndDateEnglish control.
+        /// lblGender control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEndDateEnglish;
+        protected global::System.Web.UI.WebControls.Label lblGender;
 
         /// <summary>
-        /// upPnl control.
+        /// lblDOB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upPnl;
+        protected global::System.Web.UI.WebControls.Label lblDOB;
 
         /// <summary>
-        /// ddlBranch control.
+        /// lblJoinDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBranch;
+        protected global::System.Web.UI.WebControls.Label lblJoinDate;
 
         /// <summary>
-        /// ddlDepartment control.
+        /// lblEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDepartment;
+        protected global::System.Web.UI.WebControls.Label lblEmail;
 
         /// <summary>
-        /// txtEmployeeSearch control.
+        /// lblBranch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmployeeSearch;
+        protected global::System.Web.UI.WebControls.Label lblBranch;
 
         /// <summary>
-        /// txtEmpId control.
+        /// lblDepartment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmpId;
+        protected global::System.Web.UI.WebControls.Label lblDepartment;
 
         /// <summary>
-        /// hfEmployeeId control.
+        /// lblLoginId control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfEmployeeId;
+        protected global::System.Web.UI.WebControls.Label lblLoginId;
 
         /// <summary>
-        /// btnLoad control.
+        /// lblDesignation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLoad;
+        protected global::System.Web.UI.WebControls.Label lblDesignation;
 
         /// <summary>
-        /// btnReset control.
+        /// lblType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReset;
+        protected global::System.Web.UI.WebControls.Label lblType;
+
+        /// <summary>
+        /// lblStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatus;
+
+        /// <summary>
+        /// lblUserType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblUserType;
+
+        /// <summary>
+        /// lblGrade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblGrade;
     }
 }

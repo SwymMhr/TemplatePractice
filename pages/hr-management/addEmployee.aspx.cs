@@ -161,7 +161,7 @@ namespace TemplatingPractice.pages.hr_management
                 if (i > 0)
                 {
                     ShowAlert("Employee added successfully!", "success");
-                    Response.Redirect("employeeList.aspx", false);
+                    Response.Redirect("~/employeeList", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
                 else
@@ -177,7 +177,7 @@ namespace TemplatingPractice.pages.hr_management
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("employeeList.aspx", false);
+            Response.Redirect("~/employeeList", false);
             Context.ApplicationInstance.CompleteRequest();
         }
 

@@ -49,7 +49,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = bld.UpdateDesignation(Designationid, Designationname, status);
             if (result > 0)
             {
-                Response.Redirect("designationList.aspx");
+                Response.Redirect("~/designationList");
             }
             else
             {
@@ -60,7 +60,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("designationList.aspx");
+            Response.Redirect("~/designationList");
         }
 
         private void ShowAlert(string message, string type)

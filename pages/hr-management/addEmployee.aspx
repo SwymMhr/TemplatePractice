@@ -11,10 +11,10 @@
                         <h4 class="page-title">HR Management </h4>
                         <ol class="breadcrumb p-0 m-0">
                             <li>
-                                <a href="~/Pages/dashboard/dashboard.aspx" runat="server">Dashboard</a>
+                                Dashboard
                             </li>
                             <li>
-                                <a href="~/Pages/hr-management/employeeList.aspx" runat="server">Employee List</a>
+                                Employee List
                             </li>
                             <li class="active">Add Employees
                             </li>

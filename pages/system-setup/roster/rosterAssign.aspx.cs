@@ -182,7 +182,7 @@ namespace TemplatingPractice.pages.system_setup.roster
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("rosterAssignList.aspx");
+            Response.Redirect("~/rosterAssignList");
         }
 
         private void ShowAlert(string message, string type)

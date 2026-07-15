@@ -15,7 +15,7 @@
     <link href="<%= ResolveUrl("~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css") %>" rel="stylesheet" />
 
     <link href="<%= ResolveUrl("~/assets/nepali.datepicker.v4.0.8/nepali.datepicker.v4.0.8.min.css") %>" rel="stylesheet" />
-    
+
     <!-- Jquery filer css -->
     <link href="<%= ResolveUrl("~/assets/plugins/jquery.filer/css/jquery.filer.css") %>" rel="stylesheet" />
     <link href="<%= ResolveUrl("~/assets/plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css") %>" rel="stylesheet" />
@@ -72,7 +72,7 @@
 
                 <!-- LOGO -->
                 <div class="topbar-left">
-                    <a href="index.html" class="logo"><span>Avighna</span><i class="mdi mdi-cube"></i></a>
+                    <a href="<%= ResolveUrl("~/dashboard") %>" class="logo"><span>Avighna</span><i class="mdi mdi-cube"></i></a>
                 </div>
 
                 <!-- Button mobile view to collapse sidebar menu -->
@@ -113,7 +113,7 @@
 
                         <!-- Right(Notification) -->
                         <ul class="nav navbar-nav navbar-right">
-                            
+
                             <li class="dropdown user-box">
                                 <a href="#" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
                                     <img runat="server" src="~/assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
@@ -124,7 +124,7 @@
                                         <h5>Hi, <asp:Label ID="lblLoginUsername" runat="server" Text=""></asp:Label></h5>
                                     </li>
                                     <li><asp:HyperLink runat="server" NavigateUrl="#"><i class="mdi mdi-account-settings-variant m-r-5"></i>Change Password </asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/other-pages/page-logout.aspx"><i class="ti-power-off m-r-5"></i> Logout</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/page-logout"><i class="ti-power-off m-r-5"></i> Logout</asp:HyperLink></li>
                                 </ul>
                             </li>
 
@@ -159,13 +159,13 @@
                         <div class="dropdown" id="setting-dropdown">
                             <ul class="dropdown-menu">
                                 <li><asp:HyperLink runat="server" NavigateUrl="#"><i class="mdi mdi-account-settings-variant m-r-5"></i>Change Password</asp:HyperLink></li>
-                                <li><asp:HyperLink runat="server" NavigateUrl="~/pages/other-pages/page-logout.aspx"><i class="mdi mdi-logout m-r-5"></i>Logout</asp:HyperLink></li>
+                                <li><asp:HyperLink runat="server" NavigateUrl="~/page-logout"><i class="mdi mdi-logout m-r-5"></i>Logout</asp:HyperLink></li>
                             </ul>
                         </div>
 
                         <ul>                        	
                             <li>
-                                <a href="<%= ResolveUrl("~/pages/dashboard/dashboard.aspx") %>" class="waves-effect">
+                                <a href="<%= ResolveUrl("~/dashboard") %>" class="waves-effect">
                                     <i class="mdi mdi-view-dashboard"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -178,7 +178,7 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="list-unstyled">
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/customer-support/customerSupport.aspx">Customer Support</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/customerSupport">Customer Support</asp:HyperLink></li>
                                     <li><asp:HyperLink runat="server" NavigateUrl="#">Customer Care</asp:HyperLink></li>
                                 </ul>
                             </li>
@@ -190,12 +190,12 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="list-unstyled">
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/company.aspx">Company</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/branchList.aspx">Branch</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/departmentList.aspx">Department</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/gradeList.aspx">Grade</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/designationList.aspx">Designation</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/leaveList.aspx">Leave</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/company">Company</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/branchList">Branch</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/departmentList">Department</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/gradeList">Grade</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/designationList">Designation</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/leaveList">Leave</asp:HyperLink></li>
 
                                     <li class="has_sub">
                                         <a href="#">
@@ -214,8 +214,8 @@
                                             <span class="menu-arrow"></span>
                                         </a>
                                         <ul class="list-unstyled">
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/roster/workHourList.aspx">Working Hour</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/system-setup/roster/rosterAssign.aspx">Assign</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/workHourList">Working Hour</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/rosterAssign">Assign</asp:HyperLink></li>
                                         </ul>
                                     </li>
 
@@ -223,7 +223,7 @@
                                     <li><asp:HyperLink runat="server" NavigateUrl="salarysheetlist">Salary Sheet</asp:HyperLink></li>
                                 </ul>
                             </li>
-                            
+
                             <li class="has_sub">
                                 <a href="#" class="wave-effect">
                                     <i class="mdi mdi-account-key"></i>
@@ -231,8 +231,8 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="list-unstyled">
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/hr-management/employeeList.aspx">Employee</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/hr-management/inactiveList.aspx">Inactive List</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/employeeList">Employee</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/inactiveList">Inactive List</asp:HyperLink></li>
                                 </ul>
                             </li>
 
@@ -243,8 +243,8 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="list-unstyled">
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/attendance-management/forceAttendance.aspx">Force Attendance</asp:HyperLink></li>
-                                    <li><asp:HyperLink runat="server" NavigateUrl="~/pages/attendance-management/forceAttendanceBatch.aspx">Force Attendance Batch</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/forceAttendance">Force Attendance</asp:HyperLink></li>
+                                    <li><asp:HyperLink runat="server" NavigateUrl="~/forceAttendanceBatch">Force Attendance Batch</asp:HyperLink></li>
                                 </ul>
                             </li>
 
@@ -306,10 +306,10 @@
                                             <span class="menu-arrow"></span>
                                         </a>
                                         <ul class="list-unstyled">
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/quickAttendance.aspx">Quick Attendance</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/monthlyAttendance.aspx">Monthly Attendance</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/datewiseAttendance.aspx">Datewise Attendance</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/attendance-report/dailyAttendance.aspx">Daily Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/quickAttendance">Quick Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/monthlyAttendance">Monthly Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/datewiseAttendance">Datewise Attendance</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/dailyAttendance">Daily Attendance</asp:HyperLink></li>
                                         </ul>
                                     </li>
 
@@ -331,8 +331,8 @@
                                             <span class="menu-arrow"></span>
                                         </a>
                                         <ul class="list-unstyled">
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/employee-info/employeeReport.aspx">Employee Report</asp:HyperLink></li>
-                                            <li><asp:HyperLink runat="server" NavigateUrl="~/pages/report/employee-info/employeeDetailInfo.aspx">Employee Detail Info</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/employeeReport">Employee Report</asp:HyperLink></li>
+                                            <li><asp:HyperLink runat="server" NavigateUrl="~/employeeDetailInfo">Employee Detail Info</asp:HyperLink></li>
                                         </ul>
                                     </li>
 
@@ -397,11 +397,11 @@
 
             </div>
             <!-- Left Sidebar End -->
-            
+
             <div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
-                       
+
 
                 <footer class="footer text-right">
                     <span id="lblDate">2026</span>
@@ -409,7 +409,7 @@
                     <a id="HyperLink" href="http://" target="_blank">Avighna Tech</a>
                     ©
                     <a id="HyperLinkAdmin" href="http://www.avighnatechnology.com" target="_blank">Avighna Technologies Pvt. Ltd</a>
-              
+
                 </footer>
             </div>                     
 

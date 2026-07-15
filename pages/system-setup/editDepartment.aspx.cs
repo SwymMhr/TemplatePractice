@@ -51,7 +51,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = bld.UpdateDepartment(Departmentid, Departmentcode, Departmentname, status);
             if (result > 0)
             {
-                Response.Redirect("departmentList.aspx");
+                Response.Redirect("~/departmentList");
             }
             else
             {
@@ -62,7 +62,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("departmentList.aspx");
+            Response.Redirect("~/departmentList");
         }
 
         private void ShowAlert(string message, string type)

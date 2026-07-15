@@ -33,7 +33,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addDesignation.aspx");
+            Response.Redirect("~/addDesignation");
         }
 
         protected void gvDesignation_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -41,7 +41,7 @@ namespace TemplatingPractice.pages.system_setup
             if (e.CommandName == "editDesignation")
             {
                 int DesignationID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("editDesignation.aspx?DesignationID=" + DesignationID, false);
+                Response.Redirect("~/editDesignation?DesignationID=" + DesignationID, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }

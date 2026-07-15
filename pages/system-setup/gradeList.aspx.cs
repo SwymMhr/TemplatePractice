@@ -33,7 +33,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addGrade.aspx");
+            Response.Redirect("~/addGrade");
         }
 
         protected void gvGrade_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -41,7 +41,7 @@ namespace TemplatingPractice.pages.system_setup
             if (e.CommandName == "editGrade")
             {
                 int GradeID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("editGrade.aspx?GradeID=" + GradeID, false);
+                Response.Redirect("~/editGrade?GradeID=" + GradeID, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }

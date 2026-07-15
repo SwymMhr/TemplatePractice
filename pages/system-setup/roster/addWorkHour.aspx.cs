@@ -51,7 +51,7 @@ namespace TemplatingPractice.pages.system_setup.roster
                 if (i > 0)
                 {
                     ShowAlert("Work Hour added successfully!", "success");
-                    Response.Redirect("workHourList.aspx", false);
+                    Response.Redirect("~/workHourList", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
                 else
@@ -67,7 +67,7 @@ namespace TemplatingPractice.pages.system_setup.roster
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("workHourList.aspx");
+            Response.Redirect("~/workHourList");
         }
 
         private void ShowAlert(string message, string type)

@@ -30,7 +30,7 @@ namespace TemplatingPractice.pages.customer_support
             if (e.CommandName == "ViewDetail")
             {
                 int employeeId = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("viewEmployee.aspx?EmployeeID=" + employeeId, false);
+                Response.Redirect("~/viewEmployee?EmployeeID=" + employeeId, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }

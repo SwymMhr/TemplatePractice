@@ -29,7 +29,7 @@ namespace TemplatingPractice.pages.report.attendance_report
         {
             if (!int.TryParse(Request.QueryString["BranchID"], out int branchId))
             {
-                Response.Redirect("datewiseAttendance.aspx");
+                Response.Redirect("~/datewiseAttendance");
                 return;
             }
 
@@ -40,7 +40,7 @@ namespace TemplatingPractice.pages.report.attendance_report
             if (!DateTime.TryParse(Request.QueryString["StartDate"], out DateTime startDate) ||
                 !DateTime.TryParse(Request.QueryString["EndDate"], out DateTime endDate))
             {
-                Response.Redirect("datewiseAttendance.aspx");
+                Response.Redirect("~/datewiseAttendance");
                 return;
             }
 
@@ -147,7 +147,7 @@ namespace TemplatingPractice.pages.report.attendance_report
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("datewiseAttendance.aspx");
+            Response.Redirect("~/datewiseAttendance");
         }
 
         protected void btnExport_Click(object sender, EventArgs e)

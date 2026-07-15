@@ -32,7 +32,7 @@ namespace TemplatingPractice
                     System.Diagnostics.Debug.WriteLine("Password reset email failed: " + ex.Message);
                 }
             }
-            Response.Redirect("page-confirm-mail.aspx?email=" + HttpUtility.UrlEncode(email));
+            Response.Redirect("page-confirm-mail?email=" + HttpUtility.UrlEncode(email));
         }
 
         private void SendPasswordResetEmail(string email, string newPassword)

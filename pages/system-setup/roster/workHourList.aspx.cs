@@ -35,7 +35,7 @@ namespace TemplatingPractice.pages.system_setup.roster
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addWorkHour.aspx");
+            Response.Redirect("~/addWorkHour");
         }
 
         protected void gvWorkHour_RowDataBound(object sender, GridViewRowEventArgs e)

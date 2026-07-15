@@ -30,7 +30,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = blb.CreateBranch(branchcode, branchname, isoutbranch, status);
             if (result > 0)
             {
-                Response.Redirect("branchList.aspx");
+                Response.Redirect("~/branchList");
             }
             else
             {
@@ -41,7 +41,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("branchList.aspx");
+            Response.Redirect("~/branchList");
         }
 
         private void ShowAlert(string message, string type)

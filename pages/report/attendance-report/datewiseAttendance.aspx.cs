@@ -73,7 +73,7 @@ namespace TemplatingPractice.pages.report.attendance_report
                 return;
             }
 
-            string url = "datewiseAttendanceList.aspx"
+            string url = "~/datewiseAttendanceList"
                 + "?BranchID=" + ddlBranch.SelectedValue
                 + "&DepartmentID=" + ddlDepartment.SelectedValue
                 + "&StartDate=" + startDate.ToString("yyyy-MM-dd")
@@ -84,7 +84,7 @@ namespace TemplatingPractice.pages.report.attendance_report
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("datewiseAttendance.aspx");
+            Response.Redirect("~/datewiseAttendance");
         }
 
         private void ShowAlert(string message, string type)

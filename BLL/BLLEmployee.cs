@@ -75,8 +75,37 @@ namespace TemplatingPractice.BLL
             return DAO.GetTableQuery(query, null);
         }
 
-        // Like GetEmployeeByBranchAndDepartment, but departmentId is optional —
-        // pass null to include every department within the branch.
+        public DataTable GetEmployeeFullDetailById(int employeeId)
+        {
+            SqlParameter[] param =
+            {
+                new SqlParameter("@EmployeeID", employeeId)
+            };
+
+            string query = @"SELECT e.EmployeeID,
+                           e.EmployeeName,
+                           e.Gender,
+                           e.DOBEnglish,
+                           e.JoinDateEnglish,
+                           e.Email,
+                           e.LoginID,
+                           e.EmployeeType,
+                           e.Status,
+                           e.UserType,
+                           d.DesignationName,
+                           g.GradeName,
+                           dep.DepartmentName,
+                           b.BranchName
+                    FROM tblEmployee e
+                    LEFT JOIN tblDesignation d ON e.DesignationID = d.DesignationID
+                    LEFT JOIN tblGrade g ON e.GradeID = g.GradeID
+                    LEFT JOIN tblDepartment dep ON e.DepartmentID = dep.DepartmentID
+                    LEFT JOIN tblBranch b ON e.BranchID = b.BranchID
+                    WHERE e.EmployeeID = @EmployeeID";
+
+            return DAO.GetTableQuery(query, param);
+        }
+
         public DataTable GetEmployeesForAttendanceReport(int branchId, int? departmentId)
         {
             SqlParameter[] param =

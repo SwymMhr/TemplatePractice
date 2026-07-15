@@ -51,7 +51,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = blg.UpdateGrade(Gradeid, Gradename, Gradetype, status);
             if (result > 0)
             {
-                Response.Redirect("gradeList.aspx");
+                Response.Redirect("~/gradeList");
             }
             else
             {
@@ -62,7 +62,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("gradeList.aspx");
+            Response.Redirect("~/gradeList");
         }
 
         private void ShowAlert(string message, string type)

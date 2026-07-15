@@ -1067,6 +1067,7 @@
     <Content Include="assets\plugins\tooltipster\tooltipster.bundle.min.js" />
     <Content Include="assets\plugins\tooltipster\tooltipster.core.min.js" />
     <Content Include="assets\plugins\waypoints\jquery.waypoints.min.js" />
+    <Content Include="Global.asax" />
     <Content Include="pages\attendance-management\forceAttendance.aspx" />
     <Content Include="pages\customer-support\customerSupport.aspx" />
     <Content Include="pages\hr-management\inactiveList.aspx" />
@@ -1085,7 +1086,9 @@
     <Content Include="pages\report\attendance-report\monthlyAttendance.aspx" />
     <Content Include="pages\report\attendance-report\monthlyAttendanceList.aspx" />
     <Content Include="pages\report\attendance-report\quickAttendance.aspx" />
+    <Content Include="pages\report\employee-info\employeeDetailInfo.aspx" />
     <Content Include="pages\report\employee-info\employeeReport.aspx" />
+    <Content Include="pages\report\employee-info\viewEmployeeDetailInfo.aspx" />
     <Content Include="pages\system-setup\addBranch.aspx" />
     <Content Include="pages\system-setup\addDepartment.aspx" />
     <Content Include="pages\system-setup\addDesignation.aspx" />
@@ -1118,6 +1121,9 @@
     <Compile Include="BLL\BLLWorkHour.cs" />
     <Compile Include="DAL\DAO.cs" />
     <Compile Include="BLL\BLLEmployee.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="NepaliDateConverter.cs" />
     <Compile Include="pages\attendance-management\forceAttendance.aspx.cs">
       <DependentUpon>forceAttendance.aspx</DependentUpon>
@@ -1246,12 +1252,26 @@
     <Compile Include="pages\report\attendance-report\quickAttendance.aspx.designer.cs">
       <DependentUpon>quickAttendance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="pages\report\employee-info\employeeDetailInfo.aspx.cs">
+      <DependentUpon>employeeDetailInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\employee-info\employeeDetailInfo.aspx.designer.cs">
+      <DependentUpon>employeeDetailInfo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="pages\report\employee-info\employeeReport.aspx.cs">
       <DependentUpon>employeeReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="pages\report\employee-info\employeeReport.aspx.designer.cs">
       <DependentUpon>employeeReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\report\employee-info\viewEmployeeDetailInfo.aspx.cs">
+      <DependentUpon>viewEmployeeDetailInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\report\employee-info\viewEmployeeDetailInfo.aspx.designer.cs">
+      <DependentUpon>viewEmployeeDetailInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\system-setup\addBranch.aspx.cs">
       <DependentUpon>addBranch.aspx</DependentUpon>

@@ -79,7 +79,7 @@
 
                                     <div class="form-group text-center m-t-30">
                                         <div class="col-sm-12">
-                                            <asp:HyperLink runat="server" NavigateUrl="~/page-recoverpw.aspx" CssClass="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</asp:HyperLink>
+                                            <asp:HyperLink runat="server" NavigateUrl="~/page-recoverpw" CssClass="text-muted"><i class="fa fa-lock m-r-5"></i> Forgot your password?</asp:HyperLink>
                                         </div>
                                     </div>
 
@@ -100,7 +100,7 @@
                         <div class="row m-t-50">
                             <div class="col-sm-12 text-center">
                                 <p class="text-muted">
-                                    Don't have an account? <asp:HyperLink runat="server" NavigateUrl="~/page-register.aspx" CssClass="text-primary m-l-5" ><strong>Sign Up</strong></asp:HyperLink>
+                                    Don't have an account? <asp:HyperLink runat="server" NavigateUrl="~/page-register" CssClass="text-primary m-l-5" ><strong>Sign Up</strong></asp:HyperLink>
                                 </p>
                             </div>
                         </div>

@@ -27,7 +27,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = blg.CreateGrade(Gradename, GradeType, status);
             if (result > 0)
             {
-                Response.Redirect("GradeList.aspx");
+                Response.Redirect("~/GradeList");
             }
             else
             {
@@ -38,7 +38,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("GradeList.aspx");
+            Response.Redirect("~/GradeList");
         }
 
         private void ShowAlert(string message, string type)

@@ -58,7 +58,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addLeave.aspx");
+            Response.Redirect("~/addLeave");
         }
 
         protected void gvLeave_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -66,7 +66,7 @@ namespace TemplatingPractice.pages.system_setup
             if (e.CommandName == "editLeave")
             {
                 int LeaveID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("editLeave.aspx?LeaveID=" + LeaveID, false);
+                Response.Redirect("~/editLeave?LeaveID=" + LeaveID, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }

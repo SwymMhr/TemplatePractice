@@ -25,7 +25,7 @@ namespace TemplatingPractice
                 Session["UserId"] = result.Rows[0]["UserId"];
                 Session["Username"] = result.Rows[0]["Username"];
                 Session["Email"] = result.Rows[0]["Email"];
-                Response.Redirect("~/pages/dashboard/dashboard.aspx");
+                Response.Redirect("~/dashboard");
             }
             else
             {

@@ -85,7 +85,7 @@
                             <div class="row m-t-50">
                                 <div class="col-sm-12 text-center">
                                     <p class="text-muted">Already have account?
-                                        <asp:HyperLink runat="server" NavigateUrl="~/page-login.aspx" CssClass="text-primary m-l-5"><strong>Sign In</strong></asp:HyperLink>
+                                        <asp:HyperLink runat="server" NavigateUrl="~/page-login" CssClass="text-primary m-l-5"><strong>Sign In</strong></asp:HyperLink>
                                     </p>
                                 </div>
                             </div>

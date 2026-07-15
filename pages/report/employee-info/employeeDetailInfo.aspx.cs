@@ -8,9 +8,9 @@ using System.Web.UI.WebControls;
 using TemplatingPractice.BLL;
 using TemplatingPractice.Utils;
 
-namespace TemplatingPractice.pages.report.attendance_report
+namespace TemplatingPractice.pages.report.employee_info
 {
-    public partial class monthlyAttendance : System.Web.UI.Page
+    public partial class employeeDetailInfo : System.Web.UI.Page
     {
         BLLBranch blBranch = new BLLBranch();
         BLLDepartment blDepartment = new BLLDepartment();
@@ -22,12 +22,6 @@ namespace TemplatingPractice.pages.report.attendance_report
             {
                 BindBranches();
                 RegisterEmployeeData();
-
-                DateTime today = DateTime.Today;
-                txtStartDateEnglish.Text = today.ToString("yyyy-MM-dd");
-                txtEndDateEnglish.Text = today.ToString("yyyy-MM-dd");
-                txtStartDateNepali.Text = NepaliDateConverter.ADToBSString(today);
-                txtEndDateNepali.Text = NepaliDateConverter.ADToBSString(today);
             }
         }
 
@@ -49,10 +43,6 @@ namespace TemplatingPractice.pages.report.attendance_report
             ddlDepartment.Items.Insert(0, new ListItem("Select Department", ""));
         }
 
-        /// <summary>
-        /// Loads the full employee list (ID, Name, BranchID, DepartmentID) once on initial page load
-        /// and pushes it to the client as a JS array (allEmployees) for client-side search/filtering.
-        /// </summary>
         private void RegisterEmployeeData()
         {
             DataTable dt = ble.GetAllEmployee();
@@ -150,30 +140,15 @@ namespace TemplatingPractice.pages.report.attendance_report
                 return;
             }
 
-            if (!DateTime.TryParse(txtStartDateEnglish.Text.Trim(), out DateTime startDate) ||
-                !DateTime.TryParse(txtEndDateEnglish.Text.Trim(), out DateTime endDate))
-            {
-                ShowAlert("Please provide valid Start and End dates.", "error");
-                return;
-            }
-
-            if (endDate < startDate)
-            {
-                ShowAlert("End Date must be on or after Start Date.", "error");
-                return;
-            }
-
-            string url = "~/monthlyAttendanceList"
-                + "?UserID=" + txtEmpId.Text
-                + "&StartDate=" + startDate.ToString("yyyy-MM-dd")
-                + "&EndDate=" + endDate.ToString("yyyy-MM-dd");
+            string url = "~/viewEmployeeDetailInfo"
+                + "?UserID=" + txtEmpId.Text;
 
             Response.Redirect(url);
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/monthlyAttendance");
+            Response.Redirect("~/employeeDetailInfo");
         }
 
         private void ShowAlert(string message, string type)

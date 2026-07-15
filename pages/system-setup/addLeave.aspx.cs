@@ -40,7 +40,7 @@ namespace TemplatingPractice.pages.system_setup
             int result = bll.CreateLeave(Leavename, leavetype, cashable, monthlyEarning, exhaustALlLeaves, status);
             if (result > 0)
             {
-                Response.Redirect("leaveList.aspx");
+                Response.Redirect("~/leaveList");
             }
             else
             {
@@ -51,7 +51,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("leaveList.aspx");
+            Response.Redirect("~/leaveList");
         }
 
         private void ShowAlert(string message, string type)

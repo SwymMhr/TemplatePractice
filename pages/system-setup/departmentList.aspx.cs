@@ -33,7 +33,7 @@ namespace TemplatingPractice.pages.system_setup
 
         protected void btnNew_Click(object sender, EventArgs e)
         {
-            Response.Redirect("addDepartment.aspx");
+            Response.Redirect("~/addDepartment");
         }
 
         protected void gvDepartment_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -41,7 +41,7 @@ namespace TemplatingPractice.pages.system_setup
             if (e.CommandName == "editDepartment")
             {
                 int DepartmentID = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("editDepartment.aspx?DepartmentID=" + DepartmentID, false);
+                Response.Redirect("~/editDepartment?DepartmentID=" + DepartmentID, false);
                 Context.ApplicationInstance.CompleteRequest();
             }
         }
