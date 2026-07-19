@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="monthlyAttendance.aspx.cs" Inherits="TemplatingPractice.pages.report.attendance_report.monthlyAttendance" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="logHistory.aspx.cs" Inherits="TemplatingPractice.pages.logHistory" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 <style>
@@ -25,7 +25,7 @@
         color: #fff;
     }
 </style>
-
+    
 <div class="content-page">
 
     <div class="content">
@@ -37,7 +37,7 @@
                             <li class="blue">Home</li>
                             <li class="blue">Reports</li>
                             <li class="blue">Attendance Reports</li>
-                            <li class="active">Monthly Attendance Report</li>
+                            <li class="active">QuickAttendance Report</li>
                         </ol>
                         <div class="clearfix"></div>
                     </div>
@@ -45,7 +45,7 @@
             </div>
             <!-- end row -->
 
-            <div class="row">
+                        <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-color panel-info">
                         <div class="panel-heading">
@@ -92,26 +92,10 @@
                                         <ContentTemplate>
 
                                             <div class="form-group">
-                                                <label class="control-label col-md-2">Branch <span class="text-danger">* </span></label>
-                                                <div class="col-md-5">
-                                                    <asp:DropDownList ID="ddlBranch" runat="server" title="Branch List" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlBranch_SelectedIndexChanged">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-md-2">Department <span class="text-danger">* </span></label>
-                                                <div class="col-md-5">
-                                                    <asp:DropDownList ID="ddlDepartment" runat="server" title="Department List" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartment_SelectedIndexChanged">
-                                                    </asp:DropDownList>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
                                                 <label class="control-label col-md-2">Employee <span class="text-danger">* </span></label>
                                                 <div class="col-md-5">
                                                     <div class="employee-search-wrapper" style="position: relative;">
-                                                        <asp:TextBox ID="txtEmployeeSearch" runat="server" CssClass="form-control" AutoComplete="off"></asp:TextBox>
+                                                        <asp:TextBox ID="txtEmployeeSearch" runat="server" CssClass="form-control" AutoComplete="off" ></asp:TextBox>
                                                         <div id="employeeSuggestions" class="employee-suggestions-list"></div>
                                                     </div>
                                                 </div>
@@ -183,29 +167,20 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-        var employeeTextboxSelector = '#<%= txtEmployeeSearch.ClientID %>';
-        var hiddenIdSelector = '#<%= hfEmployeeId.ClientID %>';
-        var branchSelector = '#<%= ddlBranch.ClientID %>';
-        var departmentSelector = '#<%= ddlDepartment.ClientID %>';
+            var employeeTextboxSelector = '#<%= txtEmployeeSearch.ClientID %>';
+            var hiddenIdSelector = '#<%= hfEmployeeId.ClientID %>';
 
-        function filterEmployees(term) {
-            var branchId = $(branchSelector).val();
-            var departmentId = $(departmentSelector).val();
-            var lowerTerm = term.toLowerCase();
+            function filterEmployees(term) {
+                var lowerTerm = term.toLowerCase();
 
-            return allEmployees.filter(function (emp) {
-                var matchesTerm = lowerTerm === '' ||
-                    emp.name.toLowerCase().indexOf(lowerTerm) !== -1 ||
-                    emp.id.toString().indexOf(lowerTerm) === 0;
+                return allEmployees.filter(function (emp) {
+                    return lowerTerm === '' ||
+                        emp.name.toLowerCase().indexOf(lowerTerm) !== -1 ||
+                        emp.id.toString().indexOf(lowerTerm) === 0;
+                }).slice(0, 20);
+            }
 
-                var matchesBranch = !branchId || emp.branchId.toString() === branchId;
-                var matchesDept = !departmentId || emp.departmentId.toString() === departmentId;
-
-                return matchesTerm && matchesBranch && matchesDept;
-            }).slice(0, 20);
-        }
-
-        function renderSuggestions(items) {
+            function renderSuggestions(items) {
             var $box = $('#employeeSuggestions');
             $box.empty();
 
@@ -223,35 +198,30 @@
             });
 
             $box.show();
-        }
+            }
 
-        $(document).on('focus keyup', employeeTextboxSelector, function (e) {
-            if (e.type === 'keyup' && [13, 27, 38, 40].indexOf(e.keyCode) !== -1) return;
-            renderSuggestions(filterEmployees($(this).val().trim()));
-        });
+            $(document).on('focus keyup', employeeTextboxSelector, function (e) {
+                if (e.type === 'keyup' && [13, 27, 38, 40].indexOf(e.keyCode) !== -1) return;
+                renderSuggestions(filterEmployees($(this).val().trim()));
+            });
 
-        $(document).on('click', '#employeeSuggestions .suggestion-item', function () {
-            var id = $(this).data('id');
-            var name = $(this).data('name');
+            $(document).on('click', '#employeeSuggestions .suggestion-item', function () {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
 
-            $(employeeTextboxSelector).val(name + ' (' + id + ')');
-            $(hiddenIdSelector).val(id);
-            $('#employeeSuggestions').hide();
+                $(employeeTextboxSelector).val(name + ' (' + id + ')');
+                $(hiddenIdSelector).val(id);
+                $('#employeeSuggestions').hide();
 
-            var $empIdBox = $('#<%= txtEmpId.ClientID %>');
-            $empIdBox.val(id);
-            __doPostBack('<%= txtEmpId.UniqueID %>', '');
-        });
+                var $empIdBox = $('#<%= txtEmpId.ClientID %>');
+                $empIdBox.val(id);
+                __doPostBack('<%= txtEmpId.UniqueID %>', '');
+            });
 
             $(document).on('click', function (e) {
                 if (!$(e.target).closest('.employee-search-wrapper').length) {
                     $('#employeeSuggestions').hide();
                 }
-            });
-
-            $(document).on('change', branchSelector + ', ' + departmentSelector, function () {
-                $(employeeTextboxSelector).val('');
-                $(hiddenIdSelector).val('');
             });
 
         });

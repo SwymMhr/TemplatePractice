@@ -121,7 +121,7 @@
                                                 <label class="control-label col-md-2">Employee <span class="text-danger">* </span></label>
                                                 <div class="col-md-5">
                                                     <div class="employee-search-wrapper" style="position: relative;">
-                                                        <asp:TextBox ID="txtEmployeeSearch" runat="server" CssClass="form-control" AutoComplete="off" placeholder="Type employee name or ID..."></asp:TextBox>
+                                                        <asp:TextBox ID="txtEmployeeSearch" runat="server" CssClass="form-control" AutoComplete="off"></asp:TextBox>
                                                         <div id="employeeSuggestions" class="employee-suggestions-list"></div>
                                                     </div>
                                                 </div>

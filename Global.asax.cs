@@ -74,7 +74,10 @@ namespace TemplatingPractice
             
             routes.MapPageRoute("EmployeeReport", "employeeReport", "~/pages/report/employee-info/employeeReport.aspx");
             routes.MapPageRoute("EmployeeDetailInfo", "employeeDetailInfo", "~/pages/report/employee-info/employeeDetailInfo.aspx");
-            routes.MapPageRoute("ViewEmployeeDetailInfo", "viewEmployeeDetailInfo", "~/pages/report/employee-info/viewEmployeeDetailInfo.aspx"); 
+            routes.MapPageRoute("ViewEmployeeDetailInfo", "viewEmployeeDetailInfo", "~/pages/report/employee-info/viewEmployeeDetailInfo.aspx");
+
+            routes.MapPageRoute("LogHistory", "logHistory", "~/pages/logHistory.aspx");
+            routes.MapPageRoute("LogHistoryList", "logHistoryList", "~/pages/logHistoryList.aspx");
         }
 
         protected void Session_Start(object sender, EventArgs e)

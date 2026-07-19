@@ -415,7 +415,7 @@ namespace TemplatingPractice.pages.report.attendance_info
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("quickAttendance.aspx");
+            Response.Redirect("~/quickAttendance");
         }
 
         protected void btnExport_Click(object sender, EventArgs e)

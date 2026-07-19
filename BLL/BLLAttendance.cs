@@ -18,9 +18,6 @@ namespace TemplatingPractice.BLL
                 ORDER BY a.AttendanceDateEnglish DESC", null);
         }
 
-        // Like GetAttendanceForReport, but scoped to every employee in a
-        // Branch/Department instead of a single EmployeeID — used by
-        // datewiseAttendanceList.aspx.cs.
         public DataTable GetAttendanceInRangeForEmployees(DateTime startDate, DateTime endDate, int branchId, int? departmentId)
         {
             SqlParameter[] param =
@@ -38,6 +35,31 @@ namespace TemplatingPractice.BLL
                       WHERE a.AttendanceDateEnglish BETWEEN @StartDate AND @EndDate
                         AND e.BranchID = @BranchID
                         AND (@DepartmentID IS NULL OR e.DepartmentID = @DepartmentID)";
+
+            return DAO.GetTableQuery(query, param);
+        }
+
+        public DataTable GetAttendanceLogSource(int employeeId, DateTime startDate, DateTime endDate)
+        {
+            SqlParameter[] param =
+            {
+                new SqlParameter("@EmployeeID", employeeId),
+                new SqlParameter("@StartDate", startDate),
+                new SqlParameter("@EndDate", endDate)
+            };
+
+            string query = @"
+                SELECT a.AttendanceID, a.EmployeeID, a.AttendanceDateEnglish, a.AttendanceType,
+                       COALESCE(w1.StartTime, w2.StartTime) AS StartTime,
+                       COALESCE(w1.EndTime, w2.EndTime) AS EndTime
+                FROM tblAttendance a
+                LEFT JOIN tblWorkHour w1 ON a.ShiftID = w1.WorkHourID
+                LEFT JOIN tblEmployeeShift es ON es.EmployeeID = a.EmployeeID
+                                               AND es.WeekDay = DATENAME(WEEKDAY, a.AttendanceDateEnglish)
+                LEFT JOIN tblWorkHour w2 ON es.WorkHourID = w2.WorkHourID
+                WHERE a.EmployeeID = @EmployeeID
+                  AND a.AttendanceDateEnglish BETWEEN @StartDate AND @EndDate
+                ORDER BY a.AttendanceDateEnglish ASC";
 
             return DAO.GetTableQuery(query, param);
         }

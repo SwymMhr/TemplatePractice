@@ -1074,6 +1074,8 @@
     <Content Include="pages\dashboard\dashboard.aspx" />
     <Content Include="pages\hr-management\addEmployee.aspx" />
     <Content Include="pages\hr-management\employeeList.aspx" />
+    <Content Include="pages\logHistory.aspx" />
+    <Content Include="pages\logHistoryList.aspx" />
     <Content Include="pages\other-pages\page-confirm-mail.aspx" />
     <Content Include="pages\other-pages\page-login.aspx" />
     <Content Include="pages\other-pages\page-logout.aspx" />
@@ -1166,6 +1168,20 @@
     </Compile>
     <Compile Include="pages\hr-management\employeeList.aspx.designer.cs">
       <DependentUpon>employeeList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\logHistory.aspx.cs">
+      <DependentUpon>logHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\logHistory.aspx.designer.cs">
+      <DependentUpon>logHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\logHistoryList.aspx.cs">
+      <DependentUpon>logHistoryList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\logHistoryList.aspx.designer.cs">
+      <DependentUpon>logHistoryList.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\other-pages\page-confirm-mail.aspx.cs">
       <DependentUpon>page-confirm-mail.aspx</DependentUpon>

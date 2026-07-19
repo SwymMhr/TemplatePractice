@@ -6,21 +6,22 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using TemplatingPractice.BLL;
+using TemplatingPractice.pages.system_setup;
 using TemplatingPractice.Utils;
 
-namespace TemplatingPractice.pages.report.attendance_report
+namespace TemplatingPractice.pages
 {
-    public partial class monthlyAttendance : System.Web.UI.Page
+    public partial class logHistory : System.Web.UI.Page
     {
         BLLBranch blBranch = new BLLBranch();
         BLLDepartment blDepartment = new BLLDepartment();
         BLLEmployee ble = new BLLEmployee();
+        BLLAttendance bla = new BLLAttendance();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                BindBranches();
                 RegisterEmployeeData();
 
                 DateTime today = DateTime.Today;
@@ -31,28 +32,6 @@ namespace TemplatingPractice.pages.report.attendance_report
             }
         }
 
-        private void BindBranches()
-        {
-            ddlBranch.DataSource = blBranch.GetAllBranch();
-            ddlBranch.DataTextField = "BranchName";
-            ddlBranch.DataValueField = "BranchID";
-            ddlBranch.DataBind();
-            ddlBranch.Items.Insert(0, new ListItem("Select Branch", ""));
-        }
-
-        private void BindDepartmentsForBranch()
-        {
-            ddlDepartment.DataSource = blDepartment.GetAllDepartment();
-            ddlDepartment.DataTextField = "DepartmentName";
-            ddlDepartment.DataValueField = "DepartmentID";
-            ddlDepartment.DataBind();
-            ddlDepartment.Items.Insert(0, new ListItem("Select Department", ""));
-        }
-
-        /// <summary>
-        /// Loads the full employee list (ID, Name, BranchID, DepartmentID) once on initial page load
-        /// and pushes it to the client as a JS array (allEmployees) for client-side search/filtering.
-        /// </summary>
         private void RegisterEmployeeData()
         {
             DataTable dt = ble.GetAllEmployee();
@@ -63,9 +42,7 @@ namespace TemplatingPractice.pages.report.attendance_report
                 list.Add(new
                 {
                     id = Convert.ToInt32(row["EmployeeID"]),
-                    name = row["EmployeeName"].ToString(),
-                    branchId = Convert.ToInt32(row["BranchID"]),
-                    departmentId = Convert.ToInt32(row["DepartmentID"])
+                    name = row["EmployeeName"].ToString()
                 });
             }
 
@@ -81,24 +58,6 @@ namespace TemplatingPractice.pages.report.attendance_report
             hfEmployeeId.Value = "";
             txtEmployeeSearch.Text = "";
             txtEmpId.Text = "";
-        }
-
-        protected void ddlBranch_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ddlDepartment.Items.Clear();
-            ClearEmployeeSelection();
-
-            if (string.IsNullOrWhiteSpace(ddlBranch.SelectedValue))
-            {
-                return;
-            }
-
-            BindDepartmentsForBranch();
-        }
-
-        protected void ddlDepartment_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ClearEmployeeSelection();
         }
 
         protected void txtEmpId_TextChanged(object sender, EventArgs e)
@@ -119,36 +78,12 @@ namespace TemplatingPractice.pages.report.attendance_report
             }
 
             DataRow empRow = empTable.Rows[0];
-            int branchId = Convert.ToInt32(empRow["BranchID"]);
-            int departmentId = Convert.ToInt32(empRow["DepartmentID"]);
-
-            BindBranches();
-            if (ddlBranch.Items.FindByValue(branchId.ToString()) == null)
-            {
-                ShowAlert("Employee's branch could not be matched.", "error");
-                return;
-            }
-            ddlBranch.SelectedValue = branchId.ToString();
-
-            BindDepartmentsForBranch();
-            if (ddlDepartment.Items.FindByValue(departmentId.ToString()) == null)
-            {
-                ShowAlert("Employee's department could not be matched.", "error");
-                return;
-            }
-            ddlDepartment.SelectedValue = departmentId.ToString();
-
             hfEmployeeId.Value = employeeId.ToString();
             txtEmployeeSearch.Text = empRow["EmployeeName"].ToString() + " (" + employeeId + ")";
         }
 
         protected void btnLoad_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(ddlBranch.SelectedValue))
-            {
-                ShowAlert("Please select a Branch.", "error");
-                return;
-            }
 
             if (!DateTime.TryParse(txtStartDateEnglish.Text.Trim(), out DateTime startDate) ||
                 !DateTime.TryParse(txtEndDateEnglish.Text.Trim(), out DateTime endDate))
@@ -163,7 +98,7 @@ namespace TemplatingPractice.pages.report.attendance_report
                 return;
             }
 
-            string url = "~/monthlyAttendanceList"
+            string url = "~/logHistoryList"
                 + "?UserID=" + hfEmployeeId.Value
                 + "&StartDate=" + startDate.ToString("yyyy-MM-dd")
                 + "&EndDate=" + endDate.ToString("yyyy-MM-dd");
@@ -171,9 +106,56 @@ namespace TemplatingPractice.pages.report.attendance_report
             Response.Redirect(url);
         }
 
+        protected void gvReport_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType != DataControlRowType.DataRow) return;
+
+            DataRowView drv = (DataRowView)e.Row.DataItem;
+            bool isWeekend = (bool)drv["IsWeekend"];
+            string dayRemarks = drv["DayRemarks"].ToString();
+
+            string mergedText;
+            string cssClass;
+
+            if (isWeekend)
+            {
+                mergedText = "Weekend Holiday";
+                cssClass = "weekend-holiday-row";
+            }
+            else if (dayRemarks == "Absent")
+            {
+                mergedText = "Absent";
+                cssClass = "absent-row";
+            }
+            else
+            {
+                return;
+            }
+
+            const int mergeStartIndex = 2;
+            int lastIndex = e.Row.Cells.Count - 1;
+            int colSpan = lastIndex - mergeStartIndex + 1;
+
+            TableCell mergedCell = e.Row.Cells[mergeStartIndex];
+            mergedCell.ColumnSpan = colSpan;
+            mergedCell.Text = mergedText;
+            mergedCell.CssClass = cssClass;
+            mergedCell.HorizontalAlign = HorizontalAlign.Center;
+
+            for (int i = lastIndex; i > mergeStartIndex; i--)
+            {
+                e.Row.Cells.RemoveAt(i);
+            }
+        }
+
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/monthlyAttendance");
+            Response.Redirect("~/LogHistory");
+        }
+
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            ShowAlert("Excel export isn't implemented yet.", "error");
         }
 
         private void ShowAlert(string message, string type)
