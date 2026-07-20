@@ -18,23 +18,17 @@
                 </div>
             </div>
 
-            <div class="col-md-12 form-group">
-                <div class="col-md-6 button-list">
-                    <asp:Button ID="btnNew" runat="server" Text="New" CssClass="btn btn-success col-md-2" OnClick="btnNew_Click" />                    
-                </div>
-                <div>
-                    <div style="font-weight: bold;" class="col-md-6">
-                        Employee : <asp:Label ID="lblEmployee" runat="server"></asp:Label><br />
-                        From : <asp:Label ID="lblStartDate" runat="server"></asp:Label>
-                        To : <asp:Label ID="lblEndDate" runat="server"></asp:Label>
-                    </div>
-                </div>
-            </div>
+            <asp:HiddenField ID="hfEmployee" runat="server" />
+            <asp:HiddenField ID="hfStartDate" runat="server" />
+            <asp:HiddenField ID="hfEndDate" runat="server" />
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card-box table-responsive">
 
+                    <div class="card-box table-responsive">                        
+                        <asp:LinkButton ID="lnkNew" runat="server" CssClass="btn btn-success w-md" OnClick="lnkNew_Click">
+                            <i class="mdi mdi mdi-autorenew"></i> New 
+                        </asp:LinkButton><br /> <br />  
                         <asp:GridView ID="gvLogHistory" runat="server"
                             CssClass="table table-striped table-bordered table-hover table-colored table-info"
                             AutoGenerateColumns="false"
@@ -70,9 +64,10 @@
     </div>
 </div>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="cphScripts" runat="server">
 
-    <!-- DataTables core -->
+   <!-- DataTables core -->
    <script src="<%= ResolveUrl("~/assets/plugins/datatables/jquery.dataTables.min.js") %>"></script>
    <script src="<%= ResolveUrl("~/assets/plugins/datatables/dataTables.bootstrap.js") %>"></script>
 

@@ -15,40 +15,40 @@ namespace TemplatingPractice.pages
     {
 
         /// <summary>
-        /// btnNew control.
+        /// hfEmployee control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNew;
+        protected global::System.Web.UI.WebControls.HiddenField hfEmployee;
 
         /// <summary>
-        /// lblEmployee control.
+        /// hfStartDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEmployee;
+        protected global::System.Web.UI.WebControls.HiddenField hfStartDate;
 
         /// <summary>
-        /// lblStartDate control.
+        /// hfEndDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStartDate;
+        protected global::System.Web.UI.WebControls.HiddenField hfEndDate;
 
         /// <summary>
-        /// lblEndDate control.
+        /// lnkNew control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEndDate;
+        protected global::System.Web.UI.WebControls.LinkButton lnkNew;
 
         /// <summary>
         /// gvLogHistory control.

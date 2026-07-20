@@ -52,9 +52,9 @@ namespace TemplatingPractice.pages
                 return;
             }
 
-            lblEmployee.Text = empTable.Rows[0]["EmployeeName"].ToString() + " (" + employeeId + ")";
-            lblStartDate.Text = NepaliDateConverter.ADToBSString(startDate);
-            lblEndDate.Text = NepaliDateConverter.ADToBSString(endDate);
+            hfEmployee.Value = empTable.Rows[0]["EmployeeName"].ToString() + " (" + employeeId + ")";
+            hfStartDate.Value = NepaliDateConverter.ADToBSString(startDate);
+            hfEndDate.Value = NepaliDateConverter.ADToBSString(endDate);
 
             DataTable source = bla.GetAttendanceLogSource(employeeId, startDate, endDate);
             DataTable logs = BuildLogRows(source);
@@ -121,25 +121,9 @@ namespace TemplatingPractice.pages
             }
         }
 
-        protected void btnNew_Click(object sender, EventArgs e)
+        protected void lnkNew_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/logHistory");
-        }
-
-        protected void btnExport_Click(object sender, EventArgs e)
-        {
-            Response.ClearContent();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment;filename=LogHistory.xls");
-            Response.ContentType = "application/vnd.ms-excel";
-
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter htw = new HtmlTextWriter(sw);
-
-            gvLogHistory.RenderControl(htw);
-
-            Response.Write(sw.ToString());
-            Response.End();
         }
 
         private void ShowAlert(string message, string type)
